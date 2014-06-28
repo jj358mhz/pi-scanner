@@ -55,7 +55,7 @@ CONFIGFILE=/etc/radioplay/radioplay.conf  # << Make config changes in this file
 #  In normal usage no changes should be made below...
 PID=`cat /var/run/darkice.pid`
 LIBDIR=/var/lib/radioplay
-RPINDEX=`cat /var/lib/radioplay/radioplay.index` 
+RPINDEX=`cat /var/lib/radioplay/radioplay.index`
 DPINDEX=`cat /var/lib/radioplay/drupalplay.index`
 UNIXTIME=`date +%s`
 TIMESTAMP=`date +%F-%a-%H%M`
@@ -87,7 +87,7 @@ case "$1" in
 	/usr/bin/id3v2 --artist "$ID3V2ARTIST" --album "$ID3V2ALBUM" --song "$ID3V2SONG" --year "$ID3V2YEAR" --comment "$ID3V2DESC" $LIBDIR/$RPINDEX.mp3
 
 	if [ "$SAVETYPE" = "all" -o "$SAVETYPE" = "full" ]
-	then # save full recording 
+	then # save full recording
 		cp $LIBDIR/$RPINDEX.mp3 $ARCHIVE_FOLDER/
 		chmod 644 $ARCHIVE_FOLDER/$RPINDEX.mp3
 		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER $ARCHIVE_FOLDER/$RPINDEX.mp3
@@ -99,7 +99,7 @@ case "$1" in
 		then # save trimmed recording
 		sox $LIBDIR/$RPINDEX.mp3 "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3 \
 			silence -l 1 0.1 $THSHOLD -1 1.0 $THSHOLD tempo $TEMPO
-		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3 
+		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3
 		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3
 		# upload trim to Dropbox
 		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3 "/$RPINDEX"_Anytown_trimmed.mp3
@@ -108,7 +108,7 @@ case "$1" in
 	rm $LIBDIR/$RPINDEX.mp3 && rm /tmp/darkice.file-0.$PID # cleanup
 
 #  Uncomment the following if uploading the file...
-       	#  scp $LIBDIR_FOLDER/$RPINDEX.mp3 $REMOTEUSER@$REMOTESITE:$REMOTEFOLDER/$DPINDEX.mp3	
+       	#  scp $LIBDIR_FOLDER/$RPINDEX.mp3 $REMOTEUSER@$REMOTESITE:$REMOTEFOLDER/$DPINDEX.mp3
 
 # File purge added 7Feb2013  ##############################################################
 # REQUIRES (from /etc/radioplay/radioplay.conf):
