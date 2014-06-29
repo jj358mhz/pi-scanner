@@ -50,7 +50,9 @@
 ####################################################################
 # PATH added in case it is not set when cron runs @reboot
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
-CONFIGFILE=/etc/radioplay/radioplay.conf  # << Make config changes in this file
+
+# Make config changes to the following file...
+CONFIGFILE=/etc/radioplay/radioplay.conf
 
 #  In normal usage no changes should be made below...
 PID=`cat /var/run/darkice.pid`
