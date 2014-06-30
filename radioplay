@@ -94,7 +94,7 @@ case "$1" in
 		chmod 644 $ARCHIVE_FOLDER/$RPINDEX.mp3
 		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER $ARCHIVE_FOLDER/$RPINDEX.mp3
 		# upload full to Dropbox
-		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload $LIBDIR/$RPINDEX.mp3 $DBTARGET/$RPINDEX.mp3
+		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload $LIBDIR/$RPINDEX.mp3 /$RPINDEX.mp3
 	fi
 
 	if [ "$SAVETYPE" = "all" -o "$SAVETYPE" = "trim" ]
@@ -104,7 +104,7 @@ case "$1" in
 		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3
 		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3
 		# upload trim to Dropbox
-		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3 "$DBTARGET/$RPINDEX"_Anytown_trimmed.mp3
+		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3 "/$RPINDEX"_Anytown_trimmed.mp3
 	fi
 
 	rm $LIBDIR/$RPINDEX.mp3 && rm /tmp/darkice.file-0.$PID # cleanup
