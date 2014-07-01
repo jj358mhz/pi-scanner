@@ -155,11 +155,10 @@ $ sudo mkdir /var/lib/radioplay
 Create this at the pi root (/home/pi)
 ```bash
 $ mkdir scanneraduio
-$ mkdir sandbox
+$ mkdir sandbox && cd sandbox
 ```
 ### Darkice Script
 ```bash
-cd ~/sandbox
 $ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o darkice
 ```
 ### Darkice Configuration File
@@ -174,7 +173,7 @@ $ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -
 ```bash
 $ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
 ```
-### Download them All in One Command
+### Download them all at Once
 ```bash
 $ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o darkice && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice.cfg" -o darkice.cfg && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -o radioplay && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
 ```
@@ -217,7 +216,7 @@ $ sudo crontab -e
 00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
 @reboot [ -x /usr/bin/darkice ] && /usr/bin/darkice > /dev/null
 ```
-Update the DarkIce startup script to sun at soot
+Update the DarkIce startup script to run at boot
 ```bash
 $ sudo update-rc.d darkice defaults
 ```
