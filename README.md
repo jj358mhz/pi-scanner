@@ -31,22 +31,29 @@ $ arecord -D plughw:1,0 temp.wav
 ```
 * In this case we use the plug-in called "plug" to handle format conversion. Otherwise you could use “arecord –D hw:1,0 somefile.wav but you would need to explicitly set the format to match your sound stick. Using “plughw:1,0” makes life easier.
 
-If using a microphone, speak into it for about ten seconds. Then type “ctl-c” to stop recording. If you hear the audio when you enter the command “aplay temp.wav” then recording on the RasPi and USB device is working. If you don’t hear anything using “aplay temp.wav”, or if it is too soft or is distorted, try using the command:
+If using a microphone, speak into it for about ten seconds. Then type “ctl-c” to stop recording. If you hear the audio when you enter the command,
+
+```bash
+$ aplay temp.wav
+```
+then the recording on the RasPi and USB device is working. If you don’t hear anything using “aplay temp.wav”, or if it is too soft or distorted, try using the command:
 
 ```bash
 $ sudo alsamixer
 ```
-(along with the volume control on the radio) to balance the recording level. After entering “alsamixer” press “F-6” and select the sound card (maybe called generic USB device), then “F-5” to display all controls for that device. 
+(along with the volume control on the radio) to balance the recording level. After entering “alsamixer” press “F6” and select the sound card (maybe called generic USB device), then “F5” to display all controls for that device. 
 
-Using one scanner I had to turn the scanner up quite loud, then using alsamixer turn on Auto Gain (arrow over to auto gain and press “m” until “00” is displayed). Using a different scanner I had to keep it rather low and turn auto gain off (mute) while keeping the capture level at + 9 dB. It’s fair to say “your mileage may vary.”
+Using one scanner I had to turn the scanner up quite loud, then using alsamixer turn on Auto Gain (arrow over to auto gain and press “**m**” until “**00**” is displayed). Using a different scanner I had to keep it rather low and turn auto gain off (mute) while keeping the capture level at + 9 dB. It’s fair to say “your mileage may vary.”
 
-If despite all this you cannot get decent quality audio then you should suspect a problem with the attached audio hardware, audio cable, etc. Once you have a feed running with good audio level you can save the alsamixer settings between reboots by issuing command:
+If despite all this you cannot get decent quality audio then you should suspect a problem with the attached audio hardware, audio cable, etc.
+
+Once you have a feed running with good audio level you can save the alsamixer settings between reboots by issuing command:
 
 ```bash
 $ sudo alsactl store
 ```
 
-### Updates the Pi's Catalog, Kernal, & Firmware
+### Updates the Pi's Catalog, Kernel, & Firmware
 Run these commands is sucessive order
 ```bash
 $ sudo apt-get update
