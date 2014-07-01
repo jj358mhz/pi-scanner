@@ -5,7 +5,10 @@ ScannerPi is a collection of scripts and configuration files that you can use to
 
 ## RaspberryPi Pre-Configuration Steps
 
-### Run these commands is sucessive order
+* These instructions assume you have installed Raspbian on your Pi
+
+### Updates the Pi's Catalog, Kernal, & Firmware
+Run these commands is sucessive order
 ```bash
 $ sudo apt-get update
 (wait)
@@ -19,6 +22,26 @@ $ sudo apt-get upgrade
 $ sudo rpi-update
 (reboot)
 ```
+### Add the SOX Package
+This command installs the 'sox' package required for mp3 encoding
+```bash
+sudo apt-get install sox libsox-fmt-mp3
+```
+
+## Compile & Install Darkice
+This installs the Darkice package and has you manually compile it to support mp3 encoding
+
+### Add a deb-src repository to your sources list at /etc/apt/sources.list:
+```bash
+$ sudo sh -c "echo 'deb-src http://mirrordirector.raspbian.org/raspbian/ wheezy main contrib non-free rpi' >> /etc/apt/sources.list"
+
+$$ sudo apt-get update
+```
+### Fulfills Build Dependencies
+```bash
+$ sudo apt-get --no-install-recommends install build-essential devscripts autotools-dev fakeroot dpkg-dev debhelper autotools-dev dh-make quilt ccache libsamplerate0-dev libpulse-dev libaudio-dev lame libjack-jackd2-dev libasound2-dev libtwolame-dev libfaad-dev libflac-dev libmp4v2-dev libshout3-dev libmp3lame-dev
+```
+
 
 
 
