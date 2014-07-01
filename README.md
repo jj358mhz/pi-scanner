@@ -159,9 +159,9 @@ $ sudo /etc/init.d/darkice stop
 Update the Root's Crontab
 ```bash
 $ sudo crontab -e
-
+```
 Add the following lines
-
+```bash
 00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
 @reboot [ -x /usr/bin/darkice ] && /usr/bin/darkice > /dev/null
 ```
