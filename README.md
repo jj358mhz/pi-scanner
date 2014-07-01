@@ -3,7 +3,7 @@ ScannerPi
 
 ScannerPi is a collection of scripts and configuration files that you can use to assist in setting up a RaspBerry Pi for streaming scanner audio to websites such as Broadcastify.com
 
-## RaspberryPi Pre-Configuration Steps
+## Step 1: RaspberryPi Pre-Configuration Steps
 
 * These instructions assume you have installed Raspbian on your Pi
 
@@ -28,7 +28,7 @@ This command installs the 'sox' package required for mp3 encoding
 sudo apt-get install sox libsox-fmt-mp3
 ```
 
-## Compile & Install Darkice
+## Step 2: Compile & Install Darkice
 This installs the Darkice package and has you manually compile it to support mp3 encoding
 
 ### Add a deb-src repository to your sources list at /etc/apt/sources.list:
@@ -92,9 +92,27 @@ Setting up darkice (1.0-999~mp3+1) ...
 ```
 You have installed DarkIce with mp3 support
 
-## Download Support Scripts
+## Step 3: Configure & Install Support Scripts
+This step will focus on installing and configuring DarkIce & Radioplay
+
+### Install id3 Tag Package
+```bash
+$ sudo apt-get install id3v2
+```
+### Folder Creation
+```bash
+$ sudo mkdir /etc/radioplay
+$ sudo mkdir /var/lib/radioplay
+```
+### Create Scanneraudio & Sandbox Folders
+Create this at the pi root (/home/pi)
+```bash
+$ mkdir scanneraduio
+$ mkdir sandbox
+```
 ### Darkice Script
 ```bash
+cd ~/sandbox
 curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o darkice
 ```
 ### Darkice Configuration File
@@ -109,7 +127,8 @@ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -o 
 ```bash
 curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
 ```
-
+* **Update the *darkice.cfg* and *radioplay.conf* configuration files using nano to conform it to your radiorefence.com settings**
+* **You may also need to modify the *radioplay* script at the *trim* area to customize the feed mnemonic**
 
 A deeper dive detailing the complete installation and configuration can be found at glyman's site <https://sites.google.com/site/glyman3home/home>.
 
