@@ -34,13 +34,17 @@ This installs the Darkice package and has you manually compile it to support mp3
 ### Add a deb-src repository to your sources list at /etc/apt/sources.list:
 ```bash
 $ sudo sh -c "echo 'deb-src http://mirrordirector.raspbian.org/raspbian/ wheezy main contrib non-free rpi' >> /etc/apt/sources.list"
-
-$$ sudo apt-get update
+$ sudo apt-get update
 ```
-### Fulfills Build Dependencies
+### Fulfills Build Dependencies:
 ```bash
 $ sudo apt-get --no-install-recommends install build-essential devscripts autotools-dev fakeroot dpkg-dev debhelper autotools-dev dh-make quilt ccache libsamplerate0-dev libpulse-dev libaudio-dev lame libjack-jackd2-dev libasound2-dev libtwolame-dev libfaad-dev libflac-dev libmp4v2-dev libshout3-dev libmp3lame-dev
 ```
+### Create Working Directory:
+```bash
+$ mkdir src && cd src/
+```
+
 
 
 
