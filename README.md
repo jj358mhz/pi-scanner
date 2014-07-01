@@ -115,6 +115,7 @@ override_dh_auto_configure:
 ```
 
 ### Version to Reflect mp3 Support
+Add the following "New build with mp3 support" text as shown below
 ```bash
 $ debchange -v 1.0-999~mp3+1
 
