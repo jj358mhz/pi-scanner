@@ -44,7 +44,52 @@ $ sudo apt-get --no-install-recommends install build-essential devscripts autoto
 ```bash
 $ mkdir src && cd src/
 ```
+### Get the DarkIce Source Package
+```bash
+$ apt-get source darkice
+```
+### Change the Compile Configuration to Match the Raspbian Environment
+```bash
+$ cd darkice-1.0/
+$ nano debian/rules
+```
+```bash
+#!/usr/bin/make -f
 
+%:
+	dh $@
+
+.PHONY: override_dh_auto_configure
+override_dh_auto_configure:
+  ln -s /usr/share/misc/config.guess .
+	ln -s /usr/share/misc/config.sub .
+	dh_auto_configure -- --prefix=/usr --sysconfdir=/usr/share/doc/darkice/examples --with-vorbis-prefix=/usr/lib/arm-linux-gnueabihf/ --with-jack-prefix=/usr/lib/arm-linux-gnueabihf/ --with-alsa-prefix=/usr/lib/arm-linux-gnueabihf/ --with-faac-prefix=/usr/lib/arm-linux-gnueabihf/ --with-aacplus-prefix=/usr/lib/arm-linux-gnueabihf/ --with-samplerate-prefix=/usr/lib/arm-linux-gnueabihf/ --with-lame-prefix=/usr/lib/arm-linux-gnueabihf/ CFLAGS='-march=armv6 -mfpu=vfp -mfloat-abi=hard'
+```
+* Note: The build will fail if line beginnings contains spaces instead of tabs.
+
+### Version to Reflect mp3 Support
+```bash
+$ debchange -v 1.0-999~mp3+1
+
+darkice (1.0-999~mp3+1) UNRELEASED; urgency=low
+
+  * New build with mp3 support
+
+ --  <pi@raspberrypi>  Sat, 11 Aug 2012 13:35:06 +0000
+ ```
+ 
+ ### Build & Install the Darkice Package
+ ```bash
+$ dpkg-buildpackage -rfakeroot -uc -b
+```
+```bash
+$ sudo dpkg -i ../darkice_1.0-999~mp3+1_armhf.deb
+
+Preparing to replace darkice 1.0-999 (using .../darkice_1.0-999~mp3+1_armhf.deb) ...
+Unpacking replacement darkice ...
+Setting up darkice (1.0-999~mp3+1) ...
+```
+You have installed DarkIce with mp3 support
 
 
 
