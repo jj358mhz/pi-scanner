@@ -93,13 +93,22 @@ Setting up darkice (1.0-999~mp3+1) ...
 You have installed DarkIce with mp3 support
 
 ## Download Support Scripts
-Darkice
+### Darkice Script
 ```bash
-curl "" -o darkice
+curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o darkice
 ```
-
-
-
+### Darkice Configuration File
+```bash
+curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice.cfg" -o darkice.cfg
+```
+### Radioplay Script
+```bash
+curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -o radioplay
+```
+### Radioplay Configuration File
+```bash
+curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
+```
 
 
 A deeper dive detailing the complete installation and configuration can be found at glyman's site <https://sites.google.com/site/glyman3home/home>.
