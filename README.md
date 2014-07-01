@@ -145,7 +145,7 @@ This step will focus on installing and configuring DarkIce & Radioplay
 ```bash
 $ sudo apt-get install id3v2
 ```
-### Folder Creation
+### Folder Creation for Radioplay
 ```bash
 $ sudo mkdir /etc/radioplay
 $ sudo mkdir /var/lib/radioplay
