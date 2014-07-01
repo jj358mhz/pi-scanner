@@ -3,13 +3,20 @@ ScannerPi
 
 ScannerPi is a collection of scripts and configuration files that you can use to assist in setting up a RaspBerry Pi for streaming scanner audio to websites such as Broadcastify.com
 
+## RaspberryPi Pre-Configuration Steps
+
+Run these commands is sucessive order
 ```bash
-sudo apt-get update
+$ sudo apt-get update
 (wait)
-sudo apt-get upgrade
+```
+```bash
+$ sudo apt-get upgrade
 (wait)
 (reboot)
-sudo rpi-update
+```
+```bash
+$ sudo rpi-update
 (reboot)
 ```
 
