@@ -113,24 +113,74 @@ $ mkdir sandbox
 ### Darkice Script
 ```bash
 cd ~/sandbox
-curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o darkice
+$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o darkice
 ```
 ### Darkice Configuration File
 ```bash
-curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice.cfg" -o darkice.cfg
+$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice.cfg" -o darkice.cfg
 ```
 ### Radioplay Script
 ```bash
-curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -o radioplay
+$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -o radioplay
 ```
 ### Radioplay Configuration File
 ```bash
-curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
+$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
 ```
 * **Update the *darkice.cfg* and *radioplay.conf* configuration files using nano to conform it to your radiorefence.com settings**
 * **You may also need to modify the *radioplay* script at the *trim* area to customize the feed mnemonic**
 
-A deeper dive detailing the complete installation and configuration can be found at glyman's site <https://sites.google.com/site/glyman3home/home>.
+### Edit Permission & Ownership
+```bash
+$ sudo chown root:root darkice darkice.cfg radioplay radioplay.conf
+$ sudo chmod 744 radioplay darkice
+$ sudo chmod 644 radioplay.conf darkice.cfg
+```
+### Move Files to Destination Folders
+```bash
+$ sudo mv radioplay /usr/local/bin/radioplay
+$ sudo mv radioplay.conf /etc/radioplay/radioplay.conf
+$ sudo mv darkice /etc/init.d/darkice
+$ sudo mv darkice.cfg /etc/darkice.cfg
+```
+
+## Step 4: Test and Final Cleanup
+Test DarkIce without archiving
+```bash
+$ sudo /usr/bin/darkice
+```
+Listen to the feed and adjust the levels as needed. If all works as expected then “ctl-c” to stop darkice.  If you see this error when running darkice, “…lame lib opening underlying sink error…” then darkice was unable to connect to the server. Check “/etc/darkice.cfg” for the proper entries and make sure the RasPi can access the internet.
+
+### Finalize the Installation
+Stop DarkIce
+```bash
+$ sudo /etc/init.d/darkice stop
+```
+Update the Root's Crontab
+```bash
+$ sudo crontab -e
+
+Add the following lines
+
+00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
+@reboot [ -x /usr/bin/darkice ] && /usr/bin/darkice > /dev/null
+```
+Update the DarkIce Startup Script to Run at Boot
+```bash
+$ sudo update-rc.d darkice defaults
+```
+Reboot!
+
+
+
+
+
+
+
+
+
+$
+
 
 There is also instructions and a live working feed accessible here <http://www.jj358mhz.com>
 
