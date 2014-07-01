@@ -156,7 +156,7 @@ Stop DarkIce
 ```bash
 $ sudo /etc/init.d/darkice stop
 ```
-Update the Root's Crontab
+Update the root's crontab
 ```bash
 $ sudo crontab -e
 ```
@@ -165,22 +165,10 @@ $ sudo crontab -e
 00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
 @reboot [ -x /usr/bin/darkice ] && /usr/bin/darkice > /dev/null
 ```
-Update the DarkIce Startup Script to Run at Boot
+Update the DarkIce startup script to sun at soot
 ```bash
 $ sudo update-rc.d darkice defaults
 ```
-Reboot!
-
-
-
-
-
-
-
-
-
-$
-
+### Reboot!
 
 There is also instructions and a live working feed accessible here <http://www.jj358mhz.com>
-
