@@ -55,7 +55,9 @@ $ nano debian/rules
 ```
 ```bash
 #!/usr/bin/make -f
-
+```
+Use the following text. The build will fail if the text contains SPACES instead of TABS
+```bash
 %:
 	dh $@
 
@@ -65,7 +67,6 @@ override_dh_auto_configure:
 	ln -s /usr/share/misc/config.sub .
 	dh_auto_configure -- --prefix=/usr --sysconfdir=/usr/share/doc/darkice/examples --with-vorbis-prefix=/usr/lib/arm-linux-gnueabihf/ --with-jack-prefix=/usr/lib/arm-linux-gnueabihf/ --with-alsa-prefix=/usr/lib/arm-linux-gnueabihf/ --with-faac-prefix=/usr/lib/arm-linux-gnueabihf/ --with-aacplus-prefix=/usr/lib/arm-linux-gnueabihf/ --with-samplerate-prefix=/usr/lib/arm-linux-gnueabihf/ --with-lame-prefix=/usr/lib/arm-linux-gnueabihf/ CFLAGS='-march=armv6 -mfpu=vfp -mfloat-abi=hard'
 ```
-* Note: The build will fail if line beginnings contains spaces instead of tabs.
 
 ### Version to Reflect mp3 Support
 ```bash
@@ -91,7 +92,11 @@ Setting up darkice (1.0-999~mp3+1) ...
 ```
 You have installed DarkIce with mp3 support
 
-
+## Download Support Scripts
+Darkice
+```bash
+curl "" -o darkice
+```
 
 
 
