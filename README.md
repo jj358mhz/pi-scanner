@@ -5,7 +5,7 @@ ScannerPi is a collection of scripts and configuration files that you can use to
 
 ## RaspberryPi Pre-Configuration Steps
 
-Run these commands is sucessive order
+### Run these commands is sucessive order
 ```bash
 $ sudo apt-get update
 (wait)
