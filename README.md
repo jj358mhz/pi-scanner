@@ -99,11 +99,10 @@ $ apt-get source darkice
 $ cd darkice-1.0/
 $ nano debian/rules
 ```
-```bash
-#!/usr/bin/make -f
-```
 Use the following text. The build will fail if the text contains SPACES instead of TABS
 ```bash
+#!/usr/bin/make -f
+
 %:
 	dh $@
 
