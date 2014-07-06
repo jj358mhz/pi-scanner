@@ -99,7 +99,9 @@ $ apt-get source darkice
 $ cd darkice-1.0/
 $ nano debian/rules
 ```
-Use the following text. The build will fail if the text contains SPACES instead of TABS
+Use the following text. The build will fail if the text contains SPACES instead of TABS.
+
+You may want to copy fom this link: https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/debian_rules
 ```bash
 #!/usr/bin/make -f
 
