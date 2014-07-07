@@ -204,10 +204,6 @@ $ sudo /usr/bin/darkice
 Listen to the feed and adjust the levels as needed. If all works as expected then “ctl-c” to stop darkice.  If you see this error when running darkice, “…lame lib opening underlying sink error…” then darkice was unable to connect to the server. Check “/etc/darkice.cfg” for the proper entries and make sure the RasPi can access the internet.
 
 ### Finalize the Installation
-Stop DarkIce
-```bash
-$ sudo /etc/init.d/darkice stop
-```
 Update the root's crontab
 ```bash
 $ sudo crontab -e
@@ -217,10 +213,14 @@ $ sudo crontab -e
 00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
 @reboot [ -x /usr/bin/darkice ] && /usr/bin/darkice > /dev/null
 ```
+Start DarkIce
+```bash
+$ sudo /etc/init.d/darkice start
+```
 Update the DarkIce startup script to run at boot
 ```bash
 $ sudo update-rc.d darkice defaults
 ```
 ### Reboot!
 
-There is also instructions and a live working feed accessible here <http://www.jj358mhz.com>
+There is a live working feed accessible here <http://www.jj358mhz.com>
