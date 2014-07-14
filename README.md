@@ -185,7 +185,7 @@ $ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o 
 ### Edit Permission & Ownership
 ```bash
 $ sudo chown root:root darkice darkice.cfg radioplay radioplay.conf
-$ sudo chmod 744 radioplay darkice
+$ sudo chmod 755 radioplay darkice
 $ sudo chmod 644 radioplay.conf darkice.cfg
 ```
 ### Move Files to Destination Folders
