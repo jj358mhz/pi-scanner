@@ -155,7 +155,7 @@ $ sudo mkdir /var/lib/radioplay
 ### Create Scanneraudio & Sandbox Folders
 Create this at the pi root (/home/pi)
 ```bash
-$ mkdir scanneraduio
+$ mkdir scanneraudio
 $ mkdir sandbox && cd sandbox
 ```
 ### Darkice Script
