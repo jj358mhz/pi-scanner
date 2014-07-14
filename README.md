@@ -127,7 +127,7 @@ darkice (1.0-999~mp3+1) UNRELEASED; urgency=low
  --  <pi@raspberrypi>  Sat, 11 Aug 2012 13:35:06 +0000
  ```
  
- ### Build & Install the Darkice Package
+### Build & Install the Darkice Package
  ```bash
 $ dpkg-buildpackage -rfakeroot -uc -b
 ```
