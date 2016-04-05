@@ -119,7 +119,7 @@ case "$1" in
 #       DB_ARCHIVE_AGE: Max number of minutes to keep recordings on Dropbox
 #       DISK_CAP: Max allowed disk use (percentage) for partition where archive folder resides
 
-# Dropbox purge test
+# Dropbox purge
 
 	DBFILE_PURGE=$(find $ARCHIVE_FOLDER -iname '*.mp3' -mmin +$DB_ARCHIVE_AGE -exec basename \{} \;) && sudo -u pi $DBSCRIPT delete "/$DBFILE_PURGE"
 
