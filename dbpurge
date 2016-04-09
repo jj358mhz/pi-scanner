@@ -8,8 +8,8 @@
 
 #  File Locations for Raspberry Pi (Debian based)
 
-# /usr/local/bin/dbpurge		(this file)
-# /etc/dbpurge/dbpurge.conf   (configuration file)
+# /usr/local/bin/dbpurge	    (this file)
+# /etc/dbpurge/dbpurge.conf     (configuration file)
 
 #  Add the following line to root's crontab (via sudo crontab -e):
 #       00 * * * *   [ -x /usr/local/bin/dbpurge ] && /usr/local/bin/dbpurge cron > /dev/null
