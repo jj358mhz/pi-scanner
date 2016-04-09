@@ -41,3 +41,5 @@ TIMESTAMP=`date +%F-%a-%H%M`
 # Dropbox purge
 
 	DBFILE_PURGE=$(find $ARCHIVE_FOLDER -iname '*.mp3' -mmin +$ARCHIVE_AGE -exec basename \{} \;) && sudo -u pi $DBSCRIPT delete "$DBFILE_PURGE/"
+
+exit 0
