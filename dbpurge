@@ -6,7 +6,6 @@
 #  THIS FILE: /usr/local/bin/dbpurge
 #  No Warranty is implied, promised or permitted.
 
-
 #  File Locations for Raspberry Pi (Debian based)
 
 # /usr/local/bin/dbpurge		(this file)
@@ -42,4 +41,4 @@ TIMESTAMP=`date +%F-%a-%H%M`
 
 # Dropbox purge
 
-	DBFILE_PURGE=$(find $ARCHIVE_FOLDER -iname '*.mp3' -mmin +$ARCHIVE_AGE -exec basename \{} \;) && sudo -u pi $DBSCRIPT delete "/$DBFILE_PURGE"
+	DBFILE_PURGE=$(find $ARCHIVE_FOLDER -iname '*.mp3' -mmin +$ARCHIVE_AGE -exec basename \{} \;) && sudo -u pi $DBSCRIPT delete "$DBFILE_PURGE/"
