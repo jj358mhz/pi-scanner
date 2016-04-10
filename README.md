@@ -179,7 +179,7 @@ $ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.co
 $ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o darkice && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice.cfg" -o darkice.cfg && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -o radioplay && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
 ```
 
-* **Update the *darkice.cfg* and *radioplay.conf* configuration files using nano to conform it to your radiorefence.com settings**
+* **Update the *darkice.cfg* and *radioplay.conf* configuration files using nano to conform it to your radioreference.com settings**
 * **You may also need to modify the *radioplay* script at the *trim* area to customize the feed mnemonic**
 
 ### Edit Permission & Ownership

@@ -1,25 +1,30 @@
 #! /bin/sh
 ##################################################################
 
-#  dbpurge by Jeff Johnston <jj358mhz@gmail.com>
-#  Allows schedule purge (delete) from your Dropbox app
-#  THIS FILE: /usr/local/bin/dbpurge
-#  No Warranty is implied, promised or permitted.
+# dbpurge by Jeff Johnston <jj358mhz@gmail.com>
+# Allows schedule purge (delete) from your Dropbox app
+# THIS FILE: /usr/local/bin/dbpurge
+# No Warranty is implied, promised or permitted.
 
-#  File Locations for Raspberry Pi (Debian based)
+# File Locations for Raspberry Pi (Debian based)
 
 # /usr/local/bin/dbpurge	    (this file)
 # /etc/dbpurge/dbpurge.conf     (configuration file)
 
-#  Add the following line to root's crontab (via sudo crontab -e):
+# Add the following line to root's crontab (via sudo crontab -e):
 #       15 * * * *   [ -x /usr/local/bin/dbpurge ] && /usr/local/bin/dbpurge cron > /dev/null
-#   This will purge an archive 45 minutes before the top of every hour.
+# This will purge an archive 15 minutes after the top of every hour. You can update to suit your needs.
 
 # Create these Folders if they don't exist:
 # /etc/dbpurge
 
+###############################################################
+# REQUIRES (from /etc/dbpurge/dbpurge.conf):
+#   ARCHIVE_FOLDER
+#   ARCHIVE_AGE: Max number of minutes to keep recordings
+
 ###################  >>> ENJOY !    ################################
-####################################################################
+
 # PATH added in case it is not set when cron runs @reboot
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 
@@ -32,11 +37,6 @@ TIMESTAMP=`date +%F-%a-%H%M`
 
 # Check and load the conf file
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
-
-###############################################################
-# REQUIRES (from /etc/dbpurge/dbpurge.conf):
-#       ARCHIVE_FOLDER
-#       ARCHIVE_AGE: Max number of minutes to keep recordings
 
 # Dropbox purge
 
