@@ -62,7 +62,6 @@ DPINDEX=`cat /var/lib/radioplay/drupalplay.index`
 UNIXTIME=`date +%s`
 TIMESTAMP=`date +%F-%a-%H%M`
 
-
 # Check and load the conf file
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
 
@@ -118,10 +117,6 @@ case "$1" in
 #       ARCHIVE_AGE: Max number of minutes to keep recordings
 #       DISK_CAP: Max allowed disk use (percentage) for partition where archive folder resides
 
-# Dropbox purge
-
-	DBFILE_PURGE=$(find $ARCHIVE_FOLDER -iname '*.mp3' -mmin +$ARCHIVE_AGE -exec basename \{} \;) && sudo -u pi $DBSCRIPT delete "/$DBFILE_PURGE"
-
 # first purge recording files that are older than our max age for them...
 
 	find $ARCHIVE_FOLDER -iname '*.mp3' -mmin +$ARCHIVE_AGE -print0 | xargs -0 --no-run-if-empty  /bin/rm
@@ -133,7 +128,7 @@ case "$1" in
 	do
 	        rm $(ls -tr $ARCHIVE_FOLDER/*.mp3 | head -n 1)
 	done
-#  END of file purge
+# END of file purge
 
 	[ -f /tmp/radioplay_active.mp3 ] && sudo chmod 644 /tmp/radioplay_active.mp3 # allow copying of active recording
 	;;
