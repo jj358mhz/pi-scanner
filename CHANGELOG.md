@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Version 1.1.1 - (20-May-2015)
+## Version 1.1.1 - (07-Sep-2016)
 * FIXED: Shebang syntax correction
 * FIXED: Dbpurge function corrected
 * ADDED: Changelog

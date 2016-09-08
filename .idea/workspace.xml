@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="24dcfffc-6000-4ccb-9ae5-f32c24609b52" name="Default" comment="Shebang syntax fix">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CHANGELOG.md" />
+    <list default="true" id="24dcfffc-6000-4ccb-9ae5-f32c24609b52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dbpurge" afterPath="$PROJECT_DIR$/dbpurge" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dbpurge.conf" afterPath="$PROJECT_DIR$/dbpurge.conf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGELOG.md" afterPath="$PROJECT_DIR$/CHANGELOG.md" />
     </list>
     <ignored path="ScannerPi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -551,7 +549,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473300901983</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="## Version 1.1.1 - (20-May-2015)&#10;* FIXED: Shebang syntax correction&#10;* FIXED: Dbpurge function corrected&#10;* ADDED: Changelog">
+      <created>1473313999601</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1473313999601</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView">
@@ -610,7 +615,8 @@
     <MESSAGE value="Code update" />
     <MESSAGE value=" Code update still in testing" />
     <MESSAGE value="Shebang syntax fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Shebang syntax fix" />
+    <MESSAGE value="## Version 1.1.1 - (20-May-2015)&#10;* FIXED: Shebang syntax correction&#10;* FIXED: Dbpurge function corrected&#10;* ADDED: Changelog" />
+    <option name="LAST_COMMIT_MESSAGE" value="## Version 1.1.1 - (20-May-2015)&#10;* FIXED: Shebang syntax correction&#10;* FIXED: Dbpurge function corrected&#10;* ADDED: Changelog" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
