@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="24dcfffc-6000-4ccb-9ae5-f32c24609b52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGELOG.md" afterPath="$PROJECT_DIR$/CHANGELOG.md" />
     </list>
     <ignored path="ScannerPi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -556,7 +555,14 @@
       <option name="project" value="LOCAL" />
       <updated>1473313999601</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="## Version 1.1.1 - (07-Sep-2016)&#10;* FIXED: Shebang syntax correction&#10;* FIXED: Dbpurge function corrected&#10;* ADDED: Changelog">
+      <created>1473314064201</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1473314064201</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -570,9 +576,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1032" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22523962" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22523962" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.4978701" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12691467" sideWeight="0.51277953" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12886049" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -616,7 +622,8 @@
     <MESSAGE value=" Code update still in testing" />
     <MESSAGE value="Shebang syntax fix" />
     <MESSAGE value="## Version 1.1.1 - (20-May-2015)&#10;* FIXED: Shebang syntax correction&#10;* FIXED: Dbpurge function corrected&#10;* ADDED: Changelog" />
-    <option name="LAST_COMMIT_MESSAGE" value="## Version 1.1.1 - (20-May-2015)&#10;* FIXED: Shebang syntax correction&#10;* FIXED: Dbpurge function corrected&#10;* ADDED: Changelog" />
+    <MESSAGE value="## Version 1.1.1 - (07-Sep-2016)&#10;* FIXED: Shebang syntax correction&#10;* FIXED: Dbpurge function corrected&#10;* ADDED: Changelog" />
+    <option name="LAST_COMMIT_MESSAGE" value="## Version 1.1.1 - (07-Sep-2016)&#10;* FIXED: Shebang syntax correction&#10;* FIXED: Dbpurge function corrected&#10;* ADDED: Changelog" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -803,6 +810,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
