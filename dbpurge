@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 ##################################################################
 
 # dbpurge by Jeff Johnston <jj358mhz@gmail.com>
