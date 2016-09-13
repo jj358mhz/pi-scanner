@@ -29,7 +29,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 # Make config changes to the following file...
 CONFIGFILE=/etc/dbpurge/dbpurge.conf
 
-#  In normal usage no changes should be made below...
+# In normal usage no changes should be made below...
 UNIXTIME=`date +%s`
 TIMESTAMP=`date +%F-%a-%H%M`
 
@@ -40,6 +40,6 @@ TIMESTAMP=`date +%F-%a-%H%M`
 
 DBFILE_PURGE=$(ls -tr $ARCHIVE_FOLDER | head -1)
 
-sudo -u pi $DBSCRIPT delete "$DBFILE_PURGE"
+[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT delete "$DBFILE_PURGE"
 
 exit 0

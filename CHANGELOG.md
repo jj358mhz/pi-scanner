@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 1.1.2 - (12-Sep-2016)
+* FIXED: USEDROPBOX = "yes" parameter added
+
 ## Version 1.1.1 - (07-Sep-2016)
 * FIXED: Shebang syntax correction
 * FIXED: Dbpurge function corrected
