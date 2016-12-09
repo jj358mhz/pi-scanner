@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 1.1.3 - (08-Dec-2016)
+* UPDATED: darkice.cfg Updated 'server' URL domain
+
 ## Version 1.1.2 - (12-Sep-2016)
 * FIXED: USEDROPBOX = "yes" parameter added
 
