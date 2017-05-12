@@ -223,3 +223,47 @@ $ sudo update-rc.d darkice defaults
 ### Reboot!
 
 There is a live working feed accessible here <http://www.jj358mhz.com>
+
+## (OPTIONAL)
+
+### Dropbox Uploader (third-party download)
+
+<https://github.com/andreafabrizi/Dropbox-Uploader>
+
+Dropbox Uploader is a BASH script which can be used to upload, download, delete, list files (and more!) from Dropbox, an online file sharing, synchronization and backup service.
+
+It's written in BASH scripting language and only needs cURL.
+
+Why use this script?
+
+Portable: It's written in BASH scripting and only needs cURL (curl is a tool to transfer data from or to a server, available for all operating systems and installed by default in many linux distributions).
+Secure: It's not required to provide your username/password to this script, because it uses the official Dropbox API for the authentication process.
+Please refer to the <Wiki>(https://github.com/andreafabrizi/Dropbox-Uploader/wiki) for tips and additional information about this project. The Wiki is also the place where you can share your scripts and examples related to Dropbox Uploader.
+
+### Dropbox Purge (Dbpurge)
+
+Dropbox purge (dbpurge) is an independent script that allows the user to purge their Dropbox app folder of the oldest archive recording. The script runs as a cron job (user-defined scheduling) and periodically deletes the oldest file using the Dropbox
+
+Ensure that you have the gawk package installed on your OS (apt-get install gawk)
+```bash
+$ sudo apt-get install gawk -y
+```
+#### Download dbpurge Script
+```bash
+$ cd /usr/local/bin
+$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/dbpurge" -o dbpurge
+```
+#### Edit Permission & Ownership
+```bash
+$ sudo chmod 755 dbpurge
+```
+#### Download dbpurge.conf Configuration File
+```bash
+$ sudo mkdir /etc/dbpurge && cd /etc/dbpurge
+$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/dbpurge.conf" -o dbpurge.conf
+```
+
+#### Edit Permission & Ownership
+```bash
+$ sudo chmod 644 dbpurge.conf
+```

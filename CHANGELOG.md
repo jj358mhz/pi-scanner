@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 1.1.4 - (12-May-2017)
+* UPDATED: Dbpurge script now queries your Dropbox app folder and deletes oldest file
+* UPDATED: Dropbox Uploader & Dbpurge script README instruction sections added
+* FIXED: various script comment typos
+
 ## Version 1.1.3 - (08-Dec-2016)
 * UPDATED: darkice.cfg Updated 'server' URL domain
 
