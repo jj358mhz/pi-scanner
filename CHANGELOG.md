@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 2.0.0 - (28-July-2017)
+* UPDATED: Dbpurge script refactored
+* UPDATED: Dbpurge.conf file updated to match refactored Dbpurge script
+* FIXED: various script comment typos
+
 ## Version 1.1.4 - (12-May-2017)
 * UPDATED: Dbpurge script now queries your Dropbox app folder and deletes oldest file
 * UPDATED: Dropbox Uploader & Dbpurge script README instruction sections added

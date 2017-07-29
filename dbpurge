@@ -6,32 +6,37 @@
 # THIS FILE: /usr/local/bin/dbpurge
 # No Warranty is implied, promised or permitted.
 
+# dbpurge works in tandem with radioplay
+
+# Use of dbpurge feature requires setup of 3rd-party script called Dropbox Uploader
+# See https://github.com/andreafabrizi/Dropbox-Uploader
+
+##################################################################
 # File Locations for Raspberry Pi (Debian based)
 
-# /usr/local/bin/dbpurge       	    (this file)
+# /usr/local/bin/dbpurge       	(this file)
 # /etc/dbpurge/dbpurge.conf     (configuration file)
+
+# Create this folder if it does not exist:
+# /etc/dbpurge
+
+# Ensure that you have the gawk package installed on your OS (apt-get install gawk)
+
+##################################################################
 
 # Add the following line to root's crontab (via sudo crontab -e):
 #       xx * * * *   [ -x /usr/local/bin/dbpurge ] && /usr/local/bin/dbpurge cron > /dev/null
 # This will purge an archive xx minutes after the top of every hour. You can update to suit your needs.
 
-# Create these Folders if they don't exist:
-# /etc/dbpurge
-
-###############################################################
-# REQUIRES (from /etc/dbpurge/dbpurge.conf):
-#   ARCHIVE_FOLDER
 ###################  >>> ENJOY !    ################################
+
+set -x
 
 # PATH added in case it is not set when cron runs @reboot
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 
 # Make config changes to the following file...
 CONFIGFILE=/etc/dbpurge/dbpurge.conf
-
-#  In normal usage no changes should be made below...
-UNIXTIME=`date +%s`
-TIMESTAMP=`date +%F-%a-%H%M`
 
 # Check and load the conf file
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
