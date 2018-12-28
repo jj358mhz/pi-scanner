@@ -6,21 +6,14 @@
 # THIS FILE: /usr/local/bin/dbpurge
 # No Warranty is implied, promised or permitted.
 
-# dbpurge works in tandem with radioplay
-
-# Use of dbpurge feature requires setup of 3rd-party script called Dropbox Uploader
-# See https://github.com/andreafabrizi/Dropbox-Uploader
-
 ##################################################################
 # File Locations for Raspberry Pi (Debian based)
 
-# /usr/local/bin/dbpurge       	(this file)
+# /usr/local/bin/dbpurge        (this file)
 # /etc/dbpurge/dbpurge.conf     (configuration file)
 
 # Create this folder if it does not exist:
 # /etc/dbpurge
-
-# Ensure that you have the gawk package installed on your OS (apt-get install gawk)
 
 ##################################################################
 
@@ -41,10 +34,21 @@ CONFIGFILE=/etc/dbpurge/dbpurge.conf
 # Check and load the conf file
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
 
-# Dropbox purge test lines
+# Calculates the number of DAYS (from dbpurge.conf) * 24, 1hr recordings
+FILE_COUNT=$(($DAYS \* 24))
 
-DBFILE_PURGE=`$DBSCRIPT list | gawk 'NR==2{print $3}'`
+# Dropbox purge
+
+REMOTE_COUNT=`$DBSCRIPT list | wc -l`
+
+if `[ $REMOTE_COUNT -ge $FILE_COUNT ]`;then
+ DBFILE_PURGE=`$DBSCRIPT list | gawk 'NR==2{print $3}'`
 
 [ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT delete /"$DBFILE_PURGE"
+ echo "A file was purged"
+else
+ echo "A file was not purged"
+fi
 
 exit 0
+
