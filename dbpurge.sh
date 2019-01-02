@@ -41,9 +41,8 @@ FILE_COUNT=$(($DAYS \* 24))
 
 REMOTE_COUNT=`$DBSCRIPT list | wc -l`
 
-if `[ $REMOTE_COUNT -ge $FILE_COUNT ]`;then
+if `[ $REMOTE_COUNT -gt $FILE_COUNT ]`;then
  DBFILE_PURGE=`$DBSCRIPT list | gawk 'NR==2{print $3}'`
-
 [ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT delete /"$DBFILE_PURGE"
  echo "A file was purged"
 else

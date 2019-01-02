@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## Version 2.1.0 - (27-December-2018)
+## Version 2.1.1 - (01-January-2019)
+* FIXED: Conditional check from `greater than or equal` to `greater than`
+* UPDATED: Renamed `dbpurge` file to `dbpurge.sh` 
+
+### Version 2.1.0 - (27-December-2018)
 * ADDED: Merry Christmas! Dbpurge now allows for maximum file archiving by setting the `DAYS=<value>` parameter in the `dbpurge.conf` file 
 
 ### Version 2.0.0 - (28-July-2017)
