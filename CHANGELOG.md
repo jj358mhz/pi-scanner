@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## Version 2.1.1 - (01-January-2019)
+* ADDED: `stats.py` script to allow feed listener email notifications
 * FIXED: Conditional check from `greater than or equal` to `greater than`
 * UPDATED: Renamed `dbpurge` file to `dbpurge.sh` 
 
