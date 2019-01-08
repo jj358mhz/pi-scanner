@@ -9,7 +9,7 @@
 ##################################################################
 # File Locations for Raspberry Pi (Debian based)
 
-# /usr/local/bin/dbpurge        (this file)
+# /usr/local/bin/dbpurge.sh     (this file)
 # /etc/dbpurge/dbpurge.conf     (configuration file)
 
 # Create this folder if it does not exist:
@@ -18,7 +18,7 @@
 ##################################################################
 
 # Add the following line to root's crontab (via sudo crontab -e):
-#       xx * * * *   [ -x /usr/local/bin/dbpurge ] && /usr/local/bin/dbpurge cron > /dev/null
+#       xx * * * *   [ -x /usr/local/bin/dbpurge.sh ] && /usr/local/bin/dbpurge.sh cron > /dev/null
 # This will purge an archive xx minutes after the top of every hour. You can update to suit your needs.
 
 ###################  >>> ENJOY !    ################################
@@ -41,12 +41,12 @@ FILE_COUNT=$(($DAYS \* 24))
 
 REMOTE_COUNT=`$DBSCRIPT list | wc -l`
 
-if `[ $REMOTE_COUNT -gt $FILE_COUNT ]`;then
- DBFILE_PURGE=`$DBSCRIPT list | gawk 'NR==2{print $3}'`
-[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT delete /"$DBFILE_PURGE"
- echo "A file was purged"
+if `[ $REMOTE_COUNT -gt $FILE_COUNT ]`; then
+    DBFILE_PURGE=`$DBSCRIPT list | gawk 'NR==2{print $3}'`
+    [ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT delete /"$DBFILE_PURGE"
+    echo "A file was purged"
 else
- echo "A file was not purged"
+    echo "A file was not purged"
 fi
 
 exit 0
