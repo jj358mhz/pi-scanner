@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
-
 ##################################################################
 
-# stats.py by Jeff Johnston <jj358mhz@gmail.com>
+# alert_email.py by Jeff Johnston <jj358mhz@gmail.com>
 # Alerting script for Scanner Listeners
-# THIS FILE: /usr/local/bin/stats.py
+# THIS FILE: /usr/local/bin/alert_email.py
 # No Warranty is implied, promised or permitted.
 
 ##################################################################
@@ -21,7 +20,7 @@ password = ''
 email = ''
 
 alertThreshold = 5
-alertSubject = "[UC Berkeley Police] Broadcastify Alert"
+alertSubject = "[YOUR CHANNEL NAME HERE] Broadcastify Alert"
 alertBody = "Broadcastify listener threshold exceeded " + str(alertThreshold) + " listeners.  "
 alertBody += "Listen to the feed here http://www.broadcastify.com/listen/feed/" + feedId + "  "
 alertBody += "Manage the feed here http://www.broadcastify.com/manage/feed/" + feedId + "  "
@@ -35,4 +34,3 @@ alertBody += "The current number of listeners is " + str(listeners) + "  "
 if listeners > alertThreshold:
     cmd = 'echo ' + alertBody + ' | mail -s "' + alertSubject + '" ' + email
     os.system(cmd)
-
