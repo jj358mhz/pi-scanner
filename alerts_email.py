@@ -14,7 +14,7 @@ import json
 import os
 import urllib2
 
-feedId = ''  # ENTER YOUR BROADCASTIFY FEED ID HERE
+feedID = ''  # ENTER YOUR BROADCASTIFY FEED ID HERE
 username = ''  # ENTER YOUR BROADCASTIFY USERNAME HERE
 password = ''  # ENTER YOUR BROADCASTIFY PASSWORD HERE
 email = ''  # ENTER YOUR ALERT DESTINATION EMAIL HERE
@@ -24,10 +24,10 @@ alertThreshold = 20  # ENTER YOUR DESIRED ALERT LISTENER THRESHOLD HERE
 
 alertSubject = "[YOUR CHANNEL NAME HERE] Broadcastify Alert"  # ENTER YOUR BROADCASTIFY FEED NAME HERE
 alertBody = "Broadcastify listener threshold exceeded " + str(alertThreshold) + " listeners.  "
-alertBody += "Listen to the feed here http://www.broadcastify.com/listen/feed/" + feedId + "  "
-alertBody += "Manage the feed here http://www.broadcastify.com/manage/feed/" + feedId + "  "
+alertBody += "Listen to the feed here http://www.broadcastify.com/listen/feed/" + feedID + "  "
+alertBody += "Manage the feed here http://www.broadcastify.com/manage/feed/" + feedID + "  "
 
-url = "https://api.broadcastify.com/owner/?a=feed&feedId=" + feedId + "&type=json&u=" + username + "&p=" + password
+url = "https://api.broadcastify.com/owner/?a=feed&feedId=" + feedID + "&type=json&u=" + username + "&p=" + password
 response = urllib2.urlopen(url)
 data = json.load(response)
 listeners = data['Feed'][0]['listeners']

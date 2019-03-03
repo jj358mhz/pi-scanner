@@ -18,7 +18,8 @@ import urllib2
 broadcastifyURL = 'https://api.broadcastify.com/owner/?a=feed&feedId='
 
 # Enter the account data for your Broadcastify feed
-feedId = ''  # ENTER YOUR BROADCASTIFY FEED ID HERE
+feedName = ''  # ENTER YOUR BROADCASTIFY FEED NAME HERE
+feedID = ''  # ENTER YOUR BROADCASTIFY FEED ID HERE
 username = ''  # ENTER YOUR BROADCASTIFY USERNAME HERE
 password = ''  # ENTER YOUR BROADCASTIFY PASSWORD HERE
 
@@ -26,7 +27,7 @@ password = ''  # ENTER YOUR BROADCASTIFY PASSWORD HERE
 alertThreshold = 20  # ENTER YOUR DESIRED ALERT LISTENER THRESHOLD HERE
 
 # The Slack endpoint URL
-webhook_url = 'https://hooks.slack.com/services/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'  # ENTER YOUR SLACK WEBHOOK URL HERE
+webhook_url = ''  # ENTER YOUR SLACK WEBHOOK URL HERE
 
 url = broadcastifyURL + feedID + '&type=json&u=' + username + '&p=' + password
 response = urllib2.urlopen(url)
@@ -37,7 +38,7 @@ slack_payload = {"text": "*[{}] Broadcastify Alert* :ghost:\n"
                          "Listener threshold *{}* exceeded. Listeners = *{}*\n"
                          "\n"
                          "Listen to the feed here: <http://www.broadcastify.com/listen/feed/{}>\n"
-                         "Manage the feed here: <http://www.broadcastify.com/manage/feed/{}>".format(feedname,
+                         "Manage the feed here: <http://www.broadcastify.com/manage/feed/{}>".format(feedName,
                                                                                                      alertThreshold,
                                                                                                      listeners, feedID,
                                                                                                      feedID)}
