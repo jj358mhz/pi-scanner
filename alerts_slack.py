@@ -18,7 +18,6 @@ import urllib2
 broadcastifyURL = 'https://api.broadcastify.com/owner/?a=feed&feedId='
 
 # Enter the account data for your Broadcastify feed
-feedName = ''  # ENTER YOUR BROADCASTIFY FEED NAME HERE
 feedID = ''  # ENTER YOUR BROADCASTIFY FEED ID HERE
 username = ''  # ENTER YOUR BROADCASTIFY USERNAME HERE
 password = ''  # ENTER YOUR BROADCASTIFY PASSWORD HERE
@@ -32,17 +31,24 @@ webhook_url = ''  # ENTER YOUR SLACK WEBHOOK URL HERE
 url = broadcastifyURL + feedID + '&type=json&u=' + username + '&p=' + password
 response = urllib2.urlopen(url)
 data = json.load(response)
+descr = data['Feed'][0]['descr']
 listeners = data['Feed'][0]['listeners']
+status = data['Feed'][0]['status']
+
 
 slack_payload = {"text": "*[{}] Broadcastify Alert* :ghost:\n"
                          "Listener threshold *{}* exceeded. Listeners = *{}*\n"
                          "\n"
                          "Listen to the feed here: <http://www.broadcastify.com/listen/feed/{}>\n"
-                         "Manage the feed here: <http://www.broadcastify.com/manage/feed/{}>".format(feedName,
+                         "Manage the feed here: <http://www.broadcastify.com/manage/feed/{}>".format(descr,
                                                                                                      alertThreshold,
                                                                                                      listeners, feedID,
                                                                                                      feedID)}
 
+slack_payload_feed_down = {"text": "*[{}] Broadcastify Alert* :ghost:\n"
+                         "*FEED IS DOWN*\n"
+                         "\n"
+                         "Manage the feed here: <http://www.broadcastify.com/manage/feed/{}>".format(descr, feedID)}
 
 def slack_alert(slack_payload, webhook_url):
     response = requests.post(webhook_url, data=json.dumps(slack_payload), headers={'Content-Type': 'application/json'})
@@ -53,5 +59,8 @@ def slack_alert(slack_payload, webhook_url):
             '%s' % (response.status_code, response.text))
 
 
-if listeners > alertThreshold:
-    slack_alert(slack_payload, webhook_url)
+if status == True:
+    if listeners >= alertThreshold:
+        slack_alert(slack_payload, webhook_url)
+    else:
+        slack_alert(slack_payload_feed_down, webhook_url)
