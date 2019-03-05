@@ -1,7 +1,11 @@
 # CHANGELOG
 
-# Version 2.2.0 - (04-March-2019)
-## ADDED
+# Version 2.2.1 - (04-March-2019)
+## FIXED
+- Conditional statement
+
+## Version 2.2.0 - (04-March-2019)
+### ADDED
 - New `alerts_slack.py` script to enable users to send Feed notifications to Slack 
 - New `alerts_email.py` script to enable users to send Feed notifications to email
 
