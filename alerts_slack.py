@@ -59,8 +59,8 @@ def slack_alert(slack_payload, webhook_url):
             '%s' % (response.status_code, response.text))
 
 
-if status == True:
+if status == False:
+    slack_alert(slack_payload_feed_down, webhook_url)
+else:
     if listeners >= alertThreshold:
         slack_alert(slack_payload, webhook_url)
-    else:
-        slack_alert(slack_payload_feed_down, webhook_url)
