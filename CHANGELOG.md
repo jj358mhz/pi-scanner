@@ -1,7 +1,11 @@
 # CHANGELOG
 
-# Version 2.2.1 - (04-March-2019)
-## FIXED
+# Version 2.2.2 - (07-March-2019)
+## CHANGED
+- Syntax for payload text
+
+## Version 2.2.1 - (04-March-2019)
+### FIXED
 - Conditional statement
 
 ## Version 2.2.0 - (04-March-2019)

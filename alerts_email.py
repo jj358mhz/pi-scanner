@@ -29,7 +29,7 @@ descr = data['Feed'][0]['descr']
 listeners = data['Feed'][0]['listeners']
 
 
-alertSubject = "[{}] Broadcastify Alert".format(descr)
+alertSubject = "{} Broadcastify Alert".format(descr)
 alertBody = "Broadcastify listener threshold {} exceeded ".format(alertThreshold) + " listeners.  "
 alertBody += "Listen to the feed here http://www.broadcastify.com/listen/feed/" + feedID + "  "
 alertBody += "Manage the feed here http://www.broadcastify.com/manage/feed/" + feedID + "  "

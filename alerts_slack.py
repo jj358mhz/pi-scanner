@@ -36,7 +36,7 @@ listeners = data['Feed'][0]['listeners']
 status = data['Feed'][0]['status']
 
 
-slack_payload = {"text": "*[{}] Broadcastify Alert* :ghost:\n"
+slack_payload = {"text": "*{} Broadcastify Alert* :ghost:\n"
                          "Listener threshold *{}* exceeded. Listeners = *{}*\n"
                          "\n"
                          "Listen to the feed here: <http://www.broadcastify.com/listen/feed/{}>\n"
@@ -45,7 +45,7 @@ slack_payload = {"text": "*[{}] Broadcastify Alert* :ghost:\n"
                                                                                                      listeners, feedID,
                                                                                                      feedID)}
 
-slack_payload_feed_down = {"text": "*[{}] Broadcastify Alert* :ghost:\n"
+slack_payload_feed_down = {"text": "*{} Broadcastify Alert* :ghost:\n"
                          "*FEED IS DOWN*\n"
                          "\n"
                          "Manage the feed here: <http://www.broadcastify.com/manage/feed/{}>".format(descr, feedID)}
