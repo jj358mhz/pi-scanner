@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ##################################################################
 
 #  radioplay by MattRock <matt@mattrock.net>
@@ -55,7 +55,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 CONFIGFILE=/etc/radioplay/radioplay.conf
 
 #  In normal usage no changes should be made below...
-PID=`cat /var/run/darkice.pid`
+PID=`(systemctl show -p MainPID darkice.service 2>/dev/null | cut -d= -f2)`
 LIBDIR=/var/lib/radioplay
 RPINDEX=`cat /var/lib/radioplay/radioplay.index`
 DPINDEX=`cat /var/lib/radioplay/drupalplay.index`
@@ -98,12 +98,12 @@ case "$1" in
 
 	if [ "$SAVETYPE" = "all" -o "$SAVETYPE" = "trim" ]
 		then # save trimmed recording
-		sox $LIBDIR/$RPINDEX.mp3 "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3 \
+		sox $LIBDIR/$RPINDEX.mp3 "$ARCHIVE_FOLDER/$RPINDEX"_"$LOCATION"_trimmed.mp3 \
 			silence -l 1 0.1 $THSHOLD -1 1.0 $THSHOLD tempo $TEMPO
-		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3
-		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3
+		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX"_"$LOCATION"_trimmed.mp3
+		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER "$ARCHIVE_FOLDER/$RPINDEX"_"$LOCATION"_trimmed.mp3
 		# upload trim to Dropbox
-		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3 "/$RPINDEX"_Anytown_trimmed.mp3
+		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload "$ARCHIVE_FOLDER/$RPINDEX"_"$LOCATION"_trimmed.mp3 "/$RPINDEX"_"$LOCATION"_trimmed.mp3
 	fi
 
 	rm $LIBDIR/$RPINDEX.mp3 && rm /tmp/darkice.file-0.$PID # cleanup
