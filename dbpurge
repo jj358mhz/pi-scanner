@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ##################################################################
 
 # dbpurge by Jeff Johnston <jj358mhz@gmail.com>
@@ -9,8 +9,8 @@
 ##################################################################
 # File Locations for Raspberry Pi (Debian based)
 
-# /usr/local/bin/dbpurge.sh     (this file)
-# /etc/dbpurge/dbpurge.conf     (configuration file)
+# /usr/local/bin/dbpurge        ( this file )
+# /etc/dbpurge/dbpurge.conf     ( configuration file )
 
 # Create this folder if it does not exist:
 # /etc/dbpurge
