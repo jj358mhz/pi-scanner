@@ -14,7 +14,7 @@ Restart=on-failure
 RestartSec=10
 
 # DarkIce uses POSIX real-time scheduling to keep up with sound card input.
-# Let systemd change the CPU scheduler policy and priority beforhand, so that
+# Let systemd change the CPU scheduler policy and priority beforehand, so that
 # root privilegs can be avoided.
 CPUSchedulingPolicy=fifo
 CPUSchedulingPriority=4
