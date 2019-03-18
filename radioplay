@@ -1,20 +1,19 @@
 #!/bin/bash
+
 ##################################################################
 
 #  radioplay by MattRock <matt@mattrock.net>
 #  Modified by <glyman3@gmail.com> to do local save only, auto-purge files
 #  and optionally save copy of audio with dead air removed and sped up
-#  THIS FILE: /usr/local/bin/radioplay
 #  No Warranty is implied, promised or permitted.
 
 # Note that radioplay needs to be run as root since Darkice needs to run as root.
 
 #  File Locations for Raspberry Pi (Debian based)
 
-# /usr/local/bin/radioplay		(this file)
-# /etc/radioplay/radioplay.conf   	(configuration file)
-# /etc/init.d/darkice			(darkice.init file)
-# /etc/darkice.cfg			(darkice config)
+# /usr/local/bin/radioplay          ( this file)
+# /etc/radioplay/radioplay.conf     ( configuration file )
+# /etc/darkice.cfg                  ( darkice config )
 
 #  Add the following line to root's crontab (via sudo crontab -e):
 #       00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
@@ -24,11 +23,6 @@
 # /etc/radioplay
 # /var/lib/radioplay
 # and whatever archive folder you list below as ARCHIVE_FOLDER
-
-# Darkice, when installed as a package does not come with an init script.  The included init script
-# (/etc/init.d/darkice) by Matt Rock can be used
-# use command: /etc/init.d/darkice
-#	with one argument from this list: start|stop|restart|reload|force-reload
 
 #  Note that if system is rebooted then the next file save will only include from the time of
 #  reboot (or system start) to the top of the hour (or time cron last ran).
@@ -47,7 +41,7 @@
 # Then uncomment the appropriate line in this script
 
 ###################  >>> ENJOY !    ################################
-####################################################################
+
 # PATH added in case it is not set when cron runs @reboot
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 
@@ -111,7 +105,9 @@ case "$1" in
 #  Uncomment the following if uploading the file...
        	#  scp $LIBDIR_FOLDER/$RPINDEX.mp3 $REMOTEUSER@$REMOTESITE:$REMOTEFOLDER/$DPINDEX.mp3
 
-# File purge added 7Feb2013  ##############################################################
+###########################################################################################
+
+# File purge
 # REQUIRES (from /etc/radioplay/radioplay.conf):
 #       ARCHIVE_FOLDER
 #       ARCHIVE_AGE: Max number of minutes to keep recordings
