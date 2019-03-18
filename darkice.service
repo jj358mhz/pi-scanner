@@ -1,14 +1,15 @@
 Description=DarkIce live audio streamer
 Documentation=http://www.darkice.org/ man:darkice(1) man:darkice.cfg(5)
+After=icecast.service network-online.target sound.target
 Requires=sound.target
 Wants=network-online.target
-After=icecast.service network-online.target sound.target
+
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/darkice -c /etc/darkice.cfg
-User=pi
-Group=pi
+User=root
+Group=root
 Restart=on-failure
 # Restart service after 10 seconds if node service crashes
 RestartSec=10
