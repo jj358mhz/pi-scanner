@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ##################################################################
 
@@ -8,13 +8,14 @@
 # No Warranty is implied, promised or permitted.
 
 ##################################################################
+
 # File Locations for Raspberry Pi (Debian based)
 
 # /usr/local/bin/dbpurge        ( this file )
 # /etc/dbpurge/dbpurge.conf     ( configuration file )
 
 # Create this folder if it does not exist:
-# /etc/dbpurge
+# /etc/dbpurge/
 
 ##################################################################
 
@@ -24,7 +25,6 @@
 
 ###################  >>> ENJOY !    ################################
 
-set -x
 
 # PATH added in case it is not set when cron runs @reboot
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
@@ -35,11 +35,10 @@ CONFIGFILE=/etc/dbpurge/dbpurge.conf
 # Check and load the conf file
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
 
-# Calculates the number of DAYS (from dbpurge.conf) * 24, 1hr recordings
+# Calculates the maximum file count based on number of DAYS (from dbpurge.conf)
 FILE_COUNT=$(($DAYS \* 24))
 
-# Dropbox purge
-
+# Fetches the total file count
 REMOTE_COUNT=`$DBSCRIPT list | wc -l`
 
 if `[ $REMOTE_COUNT -gt $FILE_COUNT ]`; then
