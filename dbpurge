@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 ##################################################################
 
 # dbpurge by Jeff Johnston <jj358mhz@gmail.com>
@@ -7,24 +9,27 @@
 # THIS FILE: /usr/local/bin/dbpurge
 # No Warranty is implied, promised or permitted.
 
-##################################################################
+## Create this folder if it does not exist:
+### /etc/dbpurge/
 
 # File Locations for Raspberry Pi (Debian based)
+### /usr/local/bin/dbpurge        ( this file )
+### /etc/dbpurge/dbpurge.conf     ( configuration file )
 
-# /usr/local/bin/dbpurge        ( this file )
-# /etc/dbpurge/dbpurge.conf     ( configuration file )
+# Schedule a cronjob for top and bottom of every hour, everyday
+# sudo crontab -e and paste the entry below
+# 0,30 * * * *   [ -x /usr/local/bin/dbpurge ] && /usr/local/bin/dbpurge cron > /dev/null
 
-# Create this folder if it does not exist:
-# /etc/dbpurge/
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
 
 ##################################################################
-
-# Add the following line to root's crontab (via sudo crontab -e):
-#       xx * * * *   [ -x /usr/local/bin/dbpurge.sh ] && /usr/local/bin/dbpurge.sh cron > /dev/null
-# This will purge an archive xx minutes after the top of every hour. You can update to suit your needs.
-
-###################  >>> ENJOY !    ################################
-
 
 # PATH added in case it is not set when cron runs @reboot
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
