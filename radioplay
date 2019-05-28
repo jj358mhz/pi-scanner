@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 ##################################################################
 
 #  radioplay by MattRock <matt@mattrock.net>
@@ -9,16 +11,6 @@
 
 # Note that radioplay needs to be run as root since Darkice needs to run as root.
 
-#  File Locations for Raspberry Pi (Debian based)
-
-# /usr/local/bin/radioplay          ( this file)
-# /etc/radioplay/radioplay.conf     ( configuration file )
-# /etc/darkice.cfg                  ( darkice config )
-
-#  Add the following line to root's crontab (via sudo crontab -e):
-#       00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
-#   This will create an archive every hour on the hour.
-
 # Create these Folders if they don't exist:
 # /etc/radioplay
 # /var/lib/radioplay
@@ -27,20 +19,25 @@
 #  Note that if system is rebooted then the next file save will only include from the time of
 #  reboot (or system start) to the top of the hour (or time cron last ran).
 
-# This script can use SCP to post the finished file to a Drupal server.  In order to
-# do this, it is necessary to set up SSH keyfiles to prevent SCP from asking for a
-# password.  The simplest method to do this is to execute the following command
-# as root from the Darkice machine:
+#  File Locations for Raspberry Pi (Debian based)
+### /usr/local/bin/radioplay          ( this file)
+### /etc/radioplay/radioplay.conf     ( configuration file )
+### /etc/darkice.cfg                  ( darkice config )
 
-# scp /root/.ssh/id_rsa.pub {user}@{remote_host}:.ssh/authorized_keys
+#  Add the following line to root's crontab (via sudo crontab -e):
+#       00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
+#   This will create an archive every hour on the hour.
 
-# This will ask you to verify the fingerprint and ask for a password for the remote.
-# Once this command is successful, you should be able to SSH -l {username} {remote_host}
-# to the remote machine without being challenged with a password.  Now radioplay should
-# be able to push the files to your Drupal Station.Archive import folder.
-# Then uncomment the appropriate line in this script
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
 
-###################  >>> ENJOY !    ################################
+##################################################################
 
 # PATH added in case it is not set when cron runs @reboot
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:

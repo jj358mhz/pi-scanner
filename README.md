@@ -1,7 +1,7 @@
-ScannerPi
+scannerpi
 =========
 
-ScannerPi is a collection of scripts and configuration files that you can use to assist in setting up a RaspBerry Pi for streaming scanner audio to websites such as Broadcastify.com
+scannerpi is a collection of scripts and configuration files that you can use to assist in setting up a RaspBerry Pi for streaming scanner audio to websites such as Broadcastify.com
 
 # Step 1: RaspberryPi Pre-Configuration Steps
 
@@ -102,7 +102,7 @@ $ mkdir scanneraudio
 
 ## Download all Configurations Files
 ```bash
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice.service" -o darkice.service && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice.cfg" -o darkice.cfg && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -o radioplay && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
+$ curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/darkice.service" -o darkice.service && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/darkice.cfg" -o darkice.cfg && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/radioplay" -o radioplay && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/radioplay.conf" -o radioplay.conf
 ```
 * **Update the *darkice.cfg* and *radioplay.conf* configuration files using vi or nano to conform it to your radioreference.com settings**
 * **You may also need to modify the *radioplay* script at the *trim* area to customize the feed mnemonic**
@@ -176,7 +176,7 @@ $ sudo apt-get install gawk -y
 #### Download dbpurge Script
 ```bash
 $ cd /usr/local/bin
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/dbpurge" -o dbpurge
+$ curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/dbpurge" -o dbpurge
 ```
 #### Edit Permission & Ownership
 ```bash
@@ -185,7 +185,7 @@ $ sudo chmod 755 dbpurge
 #### Download dbpurge.conf Configuration File
 ```bash
 $ sudo mkdir /etc/dbpurge && cd /etc/dbpurge
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/dbpurge.conf" -o dbpurge.conf
+$ curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/dbpurge.conf" -o dbpurge.conf
 ```
 
 #### Edit Permission & Ownership

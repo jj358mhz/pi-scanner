@@ -9,16 +9,17 @@ set -x
 # THIS FILE: /usr/local/bin/dbpurge
 # No Warranty is implied, promised or permitted.
 
-## Create this folder if it does not exist:
+## Create these folders if they do not exist:
 ### /etc/dbpurge/
+### /home/pi/dbpurge/
 
 # File Locations for Raspberry Pi (Debian based)
 ### /usr/local/bin/dbpurge        ( this file )
 ### /etc/dbpurge/dbpurge.conf     ( configuration file )
 
-# Schedule a cronjob for top and bottom of every hour, everyday
-# sudo crontab -e and paste the entry below
-# 0,30 * * * *   [ -x /usr/local/bin/dbpurge ] && /usr/local/bin/dbpurge cron > /dev/null
+# Schedule a cronjob for every x minutes
+# crontab -e and paste the entry below
+# */x * * * * /usr/local/bin/dbpurge > /home/pi/dbpurge/dbpurge.log 2>&1
 
 # Example of job definition:
 # .---------------- minute (0 - 59)
@@ -32,7 +33,7 @@ set -x
 ##################################################################
 
 # PATH added in case it is not set when cron runs @reboot
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Make config changes to the following file...
 CONFIGFILE=/etc/dbpurge/dbpurge.conf
@@ -40,19 +41,22 @@ CONFIGFILE=/etc/dbpurge/dbpurge.conf
 # Check and load the conf file
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
 
-# Calculates the maximum file count based on number of DAYS (from dbpurge.conf)
+# Calculates the number of DAYS (from dbpurge.conf) * 24, 1hr recordings
 FILE_COUNT=$(($DAYS \* 24))
 
-# Fetches the total file count
-REMOTE_COUNT=`$DBSCRIPT list | wc -l`
+# Dropbox purge
+REMOTE_LIST=`$DBSCRIPT list > /home/pi/dbpurge/dbpurge_list.txt`
+sleep 5
+REMOTE_COUNT=`cat /home/pi/dbpurge/dbpurge_list.txt | wc -l`
+sleep 5
 
-if `[ $REMOTE_COUNT -gt $FILE_COUNT ]`; then
-    DBFILE_PURGE=`$DBSCRIPT list | gawk 'NR==2{print $3}'`
-    [ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT delete /"$DBFILE_PURGE"
-    echo "A file was purged"
+if `[ $REMOTE_COUNT -gt $FILE_COUNT ]`;then
+ DBFILE_PURGE=`$DBSCRIPT list | /usr/bin/gawk 'NR==2{print $3}'`
+
+[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT delete /"$DBFILE_PURGE"
+ echo "A file was purged"
 else
-    echo "A file was not purged"
+ echo "A file was not purged"
 fi
 
 exit 0
-
