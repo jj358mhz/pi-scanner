@@ -1,53 +1,44 @@
-#!/bin/sh
+#!/bin/bash
+
+set -x
+
 ##################################################################
 
 #  radioplay by MattRock <matt@mattrock.net>
 #  Modified by <glyman3@gmail.com> to do local save only, auto-purge files
 #  and optionally save copy of audio with dead air removed and sped up
-#  THIS FILE: /usr/local/bin/radioplay
 #  No Warranty is implied, promised or permitted.
 
 # Note that radioplay needs to be run as root since Darkice needs to run as root.
-
-#  File Locations for Raspberry Pi (Debian based)
-
-# /usr/local/bin/radioplay		(this file)
-# /etc/radioplay/radioplay.conf   	(configuration file)
-# /etc/init.d/darkice			(darkice.init file)
-# /etc/darkice.cfg			(darkice config)
-
-#  Add the following line to root's crontab (via sudo crontab -e):
-#       00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
-#   This will create an archive every hour on the hour.
 
 # Create these Folders if they don't exist:
 # /etc/radioplay
 # /var/lib/radioplay
 # and whatever archive folder you list below as ARCHIVE_FOLDER
 
-# Darkice, when installed as a package does not come with an init script.  The included init script
-# (/etc/init.d/darkice) by Matt Rock can be used
-# use command: /etc/init.d/darkice
-#	with one argument from this list: start|stop|restart|reload|force-reload
-
 #  Note that if system is rebooted then the next file save will only include from the time of
 #  reboot (or system start) to the top of the hour (or time cron last ran).
 
-# This script can use SCP to post the finished file to a Drupal server.  In order to
-# do this, it is necessary to set up SSH keyfiles to prevent SCP from asking for a
-# password.  The simplest method to do this is to execute the following command
-# as root from the Darkice machine:
+#  File Locations for Raspberry Pi (Debian based)
+### /usr/local/bin/radioplay          ( this file)
+### /etc/radioplay/radioplay.conf     ( configuration file )
+### /etc/darkice.cfg                  ( darkice config )
 
-# scp /root/.ssh/id_rsa.pub {user}@{remote_host}:.ssh/authorized_keys
+#  Add the following line to root's crontab (via sudo crontab -e):
+#       00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
+#   This will create an archive every hour on the hour.
 
-# This will ask you to verify the fingerprint and ask for a password for the remote.
-# Once this command is successful, you should be able to SSH -l {username} {remote_host}
-# to the remote machine without being challenged with a password.  Now radioplay should
-# be able to push the files to your Drupal Station.Archive import folder.
-# Then uncomment the appropriate line in this script
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
 
-###################  >>> ENJOY !    ################################
-####################################################################
+##################################################################
+
 # PATH added in case it is not set when cron runs @reboot
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 
@@ -55,7 +46,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 CONFIGFILE=/etc/radioplay/radioplay.conf
 
 #  In normal usage no changes should be made below...
-PID=`cat /var/run/darkice.pid`
+PID=`(systemctl show -p MainPID darkice.service 2>/dev/null | cut -d= -f2)`
 LIBDIR=/var/lib/radioplay
 RPINDEX=`cat /var/lib/radioplay/radioplay.index`
 DPINDEX=`cat /var/lib/radioplay/drupalplay.index`
@@ -98,12 +89,12 @@ case "$1" in
 
 	if [ "$SAVETYPE" = "all" -o "$SAVETYPE" = "trim" ]
 		then # save trimmed recording
-		sox $LIBDIR/$RPINDEX.mp3 "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3 \
+		sox $LIBDIR/$RPINDEX.mp3 "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION"_trimmed.mp3 \
 			silence -l 1 0.1 $THSHOLD -1 1.0 $THSHOLD tempo $TEMPO
-		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3
-		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3
+		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION"_trimmed.mp3
+		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION"_trimmed.mp3
 		# upload trim to Dropbox
-		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload "$ARCHIVE_FOLDER/$RPINDEX"_Anytown_trimmed.mp3 "/$RPINDEX"_Anytown_trimmed.mp3
+		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION"_trimmed.mp3 "/$RPINDEX"_"$SHORT_LOCATION"_trimmed.mp3
 	fi
 
 	rm $LIBDIR/$RPINDEX.mp3 && rm /tmp/darkice.file-0.$PID # cleanup
@@ -111,7 +102,9 @@ case "$1" in
 #  Uncomment the following if uploading the file...
        	#  scp $LIBDIR_FOLDER/$RPINDEX.mp3 $REMOTEUSER@$REMOTESITE:$REMOTEFOLDER/$DPINDEX.mp3
 
-# File purge added 7Feb2013  ##############################################################
+###########################################################################################
+
+# File purge
 # REQUIRES (from /etc/radioplay/radioplay.conf):
 #       ARCHIVE_FOLDER
 #       ARCHIVE_AGE: Max number of minutes to keep recordings

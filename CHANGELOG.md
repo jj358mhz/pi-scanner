@@ -1,12 +1,14 @@
 # CHANGELOG
 
-# Version 2.2.2 - (07-March-2019)
-## CHANGED
-- Syntax for payload text
+# Version 2.3.0 - (27-May-2019)
+UPDATED:
+- Renamed `dbpurge.sh` file to `dbpurge`
+- Refactored code to run on Debian Stretch
 
 ## Version 2.2.1 - (04-March-2019)
-### FIXED
-- Conditional statement
+* ADDED: `stats.py` script to allow feed listener email notifications
+* FIXED: Conditional check from `greater than or equal` to `greater than`
+* UPDATED: Renamed `dbpurge` file to `dbpurge.sh` 
 
 ## Version 2.2.0 - (04-March-2019)
 ### ADDED

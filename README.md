@@ -1,13 +1,13 @@
-ScannerPi
+scannerpi
 =========
 
-ScannerPi is a collection of scripts and configuration files that you can use to assist in setting up a RaspBerry Pi for streaming scanner audio to websites such as Broadcastify.com
+scannerpi is a collection of scripts and configuration files that you can use to assist in setting up a RaspBerry Pi for streaming scanner audio to websites such as Broadcastify.com
 
-## Step 1: RaspberryPi Pre-Configuration Steps
+# Step 1: RaspberryPi Pre-Configuration Steps
 
 * These instructions assume you have installed Raspbian on your Pi
 
-### Audio set-up
+## Audio set-up
 
 * With your USB sound stick installed, in a terminal on the RasPi run the command 
 
@@ -53,8 +53,8 @@ Once you have a feed running with good audio level you can save the alsamixer se
 $ sudo alsactl store
 ```
 
-### Updates the Pi's Catalog, Kernel, & Firmware
-Run these commands is sucessive order
+## Updates the Pi's Catalog, Kernel, & Firmware
+Run these commands is successive order
 ```bash
 $ sudo apt-get update
 (wait)
@@ -68,131 +68,57 @@ $ sudo apt-get upgrade
 $ sudo rpi-update
 (reboot)
 ```
-### Add the SOX Package
-This command installs the 'sox' package required for mp3 encoding
+# Step 2: Install Darkice & its Dependencies
+This installs the Darkice package and its dependencies for file trimming and processing
+```bash
+sudo apt-get install darkice
+```
+
+## Add the SoX (Sound Exchange) Package
+This command installs the *sox* package required for mp3 encoding
 ```bash
 sudo apt-get install sox libsox-fmt-mp3
 ```
 
-## Step 2: Compile & Install Darkice
-This installs the Darkice package and has you manually compile it to support mp3 encoding
-
-### Add a deb-src repository to your sources list at /etc/apt/sources.list:
-```bash
-$ sudo sh -c "echo 'deb-src http://mirrordirector.raspbian.org/raspbian/ wheezy main contrib non-free rpi' >> /etc/apt/sources.list"
-$ sudo apt-get update
-```
-### Fulfills Build Dependencies:
-```bash
-$ sudo apt-get --no-install-recommends install build-essential devscripts autotools-dev fakeroot dpkg-dev debhelper autotools-dev dh-make quilt ccache libsamplerate0-dev libpulse-dev libaudio-dev lame libjack-jackd2-dev libasound2-dev libtwolame-dev libfaad-dev libflac-dev libmp4v2-dev libshout3-dev libmp3lame-dev
-```
-### Create Working Directory:
-```bash
-$ mkdir src && cd src/
-```
-### Get the DarkIce Source Package
-```bash
-$ apt-get source darkice
-```
-### Change the Compile Configuration to Match the Raspbian Environment
-```bash
-$ cd darkice-1.0/
-$ nano debian/rules
-```
-Use the following text. The build will fail if the text contains SPACES instead of TABS.
-
-You may want to copy fom this link: https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/debian_rules
-```bash
-#!/usr/bin/make -f
-
-%:
-	dh $@
-
-.PHONY: override_dh_auto_configure
-override_dh_auto_configure:
-	ln -s /usr/share/misc/config.guess .
-	ln -s /usr/share/misc/config.sub .
-	dh_auto_configure -- --prefix=/usr --sysconfdir=/usr/share/doc/darkice/examples --with-vorbis-prefix=/usr/lib/arm-linux-gnueabihf/ --with-jack-prefix=/usr/lib/arm-linux-gnueabihf/ --with-alsa-prefix=/usr/lib/arm-linux-gnueabihf/ --with-faac-prefix=/usr/lib/arm-linux-gnueabihf/ --with-aacplus-prefix=/usr/lib/arm-linux-gnueabihf/ --with-samplerate-prefix=/usr/lib/arm-linux-gnueabihf/ --with-lame-prefix=/usr/lib/arm-linux-gnueabihf/ CFLAGS='-march=armv6 -mfpu=vfp -mfloat-abi=hard'
-```
-
-### Version to Reflect mp3 Support
-Add the following "New build with mp3 support" text as shown below
-```bash
-$ debchange -v 1.0-999~mp3+1
-
-darkice (1.0-999~mp3+1) UNRELEASED; urgency=low
-
-  * New build with mp3 support
-
- --  <pi@raspberrypi>  Sat, 11 Aug 2012 13:35:06 +0000
- ```
- 
-### Build & Install the Darkice Package
- ```bash
-$ dpkg-buildpackage -rfakeroot -uc -b
-```
-```bash
-$ sudo dpkg -i ../darkice_1.0-999~mp3+1_armhf.deb
-
-Preparing to replace darkice 1.0-999 (using .../darkice_1.0-999~mp3+1_armhf.deb) ...
-Unpacking replacement darkice ...
-Setting up darkice (1.0-999~mp3+1) ...
-```
-You have installed DarkIce with mp3 support
-
-## Step 3: Configure & Install Support Scripts
-This step will focus on installing and configuring DarkIce & Radioplay
-
-### Install id3 Tag Package
+## Install id3 Tag Package
 ```bash
 $ sudo apt-get install id3v2
 ```
-### Folder Creation for Radioplay
+
+# Step 3: Configure & Install Support Scripts
+This step will focus on installing and configuring DarkIce & Radioplay
+
+## Folder Creation for Radioplay
 ```bash
 $ sudo mkdir /etc/radioplay
 $ sudo mkdir /var/lib/radioplay
 ```
-### Create Scanneraudio & Sandbox Folders
+
+## Create Scanneraudio Folder
 Create this at the pi root (/home/pi)
 ```bash
 $ mkdir scanneraudio
-$ mkdir sandbox && cd sandbox
-```
-### Darkice Script
-```bash
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o darkice
-```
-### Darkice Configuration File
-```bash
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice.cfg" -o darkice.cfg
-```
-### Radioplay Script
-```bash
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -o radioplay
-```
-### Radioplay Configuration File
-```bash
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
-```
-### Download them all at Once
-```bash
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice" -o darkice && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/darkice.cfg" -o darkice.cfg && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay" -o radioplay && curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/radioplay.conf" -o radioplay.conf
 ```
 
-* **Update the *darkice.cfg* and *radioplay.conf* configuration files using nano to conform it to your radioreference.com settings**
+## Download all Configurations Files
+```bash
+$ curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/darkice.service" -o darkice.service && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/darkice.cfg" -o darkice.cfg && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/radioplay" -o radioplay && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/radioplay.conf" -o radioplay.conf
+```
+* **Update the *darkice.cfg* and *radioplay.conf* configuration files using vi or nano to conform it to your radioreference.com settings**
 * **You may also need to modify the *radioplay* script at the *trim* area to customize the feed mnemonic**
 
 ### Edit Permission & Ownership
 ```bash
 $ sudo chown root:root darkice darkice.cfg radioplay radioplay.conf
-$ sudo chmod 755 radioplay darkice
+$ sudo chmod 755 radioplay darkice.service
 $ sudo chmod 644 radioplay.conf darkice.cfg
 ```
+
 ### Move Files to Destination Folders
 ```bash
 $ sudo mv radioplay /usr/local/bin/radioplay
 $ sudo mv radioplay.conf /etc/radioplay/radioplay.conf
-$ sudo mv darkice /etc/init.d/darkice
+$ sudo mv darkice.service /etc/systemd/system/darkice.service
 $ sudo mv darkice.cfg /etc/darkice.cfg
 ```
 
@@ -212,19 +138,17 @@ $ sudo crontab -e
 ```bash
 00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
 ```
-Start DarkIce
+Enable the DarkIce startup service to run at boot & start DarkIce
 ```bash
-$ sudo /etc/init.d/darkice start
+$ sudo systemctl enable darkice.service
+$ sudo systemctl start darkice.service
 ```
-Update the DarkIce startup script to run at boot
-```bash
-$ sudo update-rc.d darkice defaults
-```
-### Reboot!
+
+## Reboot!
 
 There is a live working feed accessible here <http://www.jj358mhz.com>
 
-## (OPTIONAL)
+## Step 5: (OPTIONAL)
 
 ### Dropbox Uploader (third-party download)
 
@@ -244,6 +168,7 @@ Please refer to the <Wiki>(https://github.com/andreafabrizi/Dropbox-Uploader/wik
 
 Dropbox purge (dbpurge) is an independent script that allows the user to purge their Dropbox app folder of the oldest archive recording. The script runs as a cron job (user-defined scheduling) and periodically deletes the oldest file using the Dropbox
 
+#### Install GAWK Dependency
 Ensure that you have the gawk package installed on your OS (apt-get install gawk)
 ```bash
 $ sudo apt-get install gawk -y
@@ -251,7 +176,7 @@ $ sudo apt-get install gawk -y
 #### Download dbpurge Script
 ```bash
 $ cd /usr/local/bin
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/dbpurge" -o dbpurge
+$ curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/dbpurge" -o dbpurge
 ```
 #### Edit Permission & Ownership
 ```bash
@@ -260,7 +185,7 @@ $ sudo chmod 755 dbpurge
 #### Download dbpurge.conf Configuration File
 ```bash
 $ sudo mkdir /etc/dbpurge && cd /etc/dbpurge
-$ curl "https://raw.githubusercontent.com/jj358mhz/ScannerPi/master/dbpurge.conf" -o dbpurge.conf
+$ curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/dbpurge.conf" -o dbpurge.conf
 ```
 
 #### Edit Permission & Ownership
