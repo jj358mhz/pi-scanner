@@ -42,7 +42,7 @@ CONFIGFILE=/etc/dbpurge/dbpurge.conf
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
 
 # Calculates the number of DAYS (from dbpurge.conf) * 24, 1hr recordings
-FILE_COUNT=$(($DAYS \* 24))
+FILE_COUNT=$(($DAYS * 24))
 
 # Dropbox purge
 REMOTE_LIST=`$DBSCRIPT list > /home/pi/dbpurge/dbpurge_list.txt`

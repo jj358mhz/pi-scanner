@@ -1,6 +1,10 @@
 # CHANGELOG
 
-# Version 2.3.0 - (27-May-2019)
+# Version 2.3.1 - (09-Sept-2019)
+UPDATED:
+- Corrected `FILE_COUNT` calculation
+
+## Version 2.3.0 - (27-May-2019)
 UPDATED:
 - Renamed `dbpurge.sh` file to `dbpurge`
 - Refactored code to run on Debian Stretch
