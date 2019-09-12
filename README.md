@@ -5,7 +5,7 @@ scannerpi is a collection of scripts and configuration files that you can use to
 
 # Step 1: RaspberryPi Pre-Configuration Steps
 
-* These instructions assume you have installed Raspbian on your Pi
+* These instructions assume you have installed Raspbian Buster on your Pi
 
 ## Audio set-up
 
@@ -74,15 +74,10 @@ This installs the Darkice package and its dependencies for file trimming and pro
 sudo apt-get install darkice
 ```
 
-## Add the SoX (Sound Exchange) Package
+## Install the SoX (Sound Exchange) & id3v2 Tag Packages
 This command installs the *sox* package required for mp3 encoding
 ```bash
-sudo apt-get install sox libsox-fmt-mp3
-```
-
-## Install id3 Tag Package
-```bash
-$ sudo apt-get install id3v2
+sudo apt-get install sox libsox-fmt-mp3 id3v2 -y
 ```
 
 # Step 3: Configure & Install Support Scripts
@@ -92,17 +87,14 @@ This step will focus on installing and configuring DarkIce & Radioplay
 ```bash
 $ sudo mkdir /etc/radioplay
 $ sudo mkdir /var/lib/radioplay
-```
-
-## Create Scanneraudio Folder
-Create this at the pi root (/home/pi)
-```bash
-$ mkdir scanneraudio
+$ sudo mkdir scanneraudio
 ```
 
 ## Download all Configurations Files
 ```bash
 $ curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/darkice.service" -o darkice.service && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/darkice.cfg" -o darkice.cfg && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/radioplay" -o radioplay && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/radioplay.conf" -o radioplay.conf
+OR clone the repo
+$ git clone https://github.com/jj358mhz/scannerpi.git
 ```
 * **Update the *darkice.cfg* and *radioplay.conf* configuration files using vi or nano to conform it to your radioreference.com settings**
 * **You may also need to modify the *radioplay* script at the *trim* area to customize the feed mnemonic**
@@ -127,7 +119,7 @@ Test DarkIce without archiving
 ```bash
 $ sudo /usr/bin/darkice
 ```
-Listen to the feed and adjust the levels as needed. If all works as expected then “ctl-c” to stop darkice.  If you see this error when running darkice, “…lame lib opening underlying sink error…” then darkice was unable to connect to the server. Check “/etc/darkice.cfg” for the proper entries and make sure the RasPi can access the internet.
+Listen to the feed and adjust the levels as needed. If all works as expected then “ctl-c” to stop DarkIce. If you see this error when running DarkIce, “…lame lib opening underlying sink error…” then DarkIce was unable to connect to the server. Check “/etc/darkice.cfg” for the proper entries and make sure the RasPi can access the internet.
 
 ### Finalize the Installation
 Update the root's crontab
@@ -164,7 +156,7 @@ Portable: It's written in BASH scripting and only needs cURL (curl is a tool to 
 Secure: It's not required to provide your username/password to this script, because it uses the official Dropbox API for the authentication process.
 Please refer to the <Wiki>(https://github.com/andreafabrizi/Dropbox-Uploader/wiki) for tips and additional information about this project. The Wiki is also the place where you can share your scripts and examples related to Dropbox Uploader.
 
-### Dropbox Purge (Dbpurge)
+### Dropbox Purge (dbpurge)
 
 Dropbox purge (dbpurge) is an independent script that allows the user to purge their Dropbox app folder of the oldest archive recording. The script runs as a cron job (user-defined scheduling) and periodically deletes the oldest file using the Dropbox
 
@@ -173,22 +165,24 @@ Ensure that you have the gawk package installed on your OS (apt-get install gawk
 ```bash
 $ sudo apt-get install gawk -y
 ```
-#### Download dbpurge Script
+#### Copy files to Destination Folders (from the scannerpi repo folder)
 ```bash
-$ cd /usr/local/bin
-$ curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/dbpurge" -o dbpurge
+$ sudo cp dbpurge /usr/local/bin/dbpurge
+$ sudo mkdir /etc/dbpurge
+$ sudo cp dbpurge.conf /etc/dbpurge/dbpurge.conf   
 ```
 #### Edit Permission & Ownership
 ```bash
 $ sudo chmod 755 dbpurge
-```
-#### Download dbpurge.conf Configuration File
-```bash
-$ sudo mkdir /etc/dbpurge && cd /etc/dbpurge
-$ curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/dbpurge.conf" -o dbpurge.conf
-```
-
-#### Edit Permission & Ownership
-```bash
 $ sudo chmod 644 dbpurge.conf
+```
+#### Finalize the Installation
+Update the Pi's crontab
+```bash
+$ crontab -e
+```
+####
+...and add the following lines
+```bash
+*/x * * * * /usr/local/bin/dbpurge > /home/pi/dbpurge/dbpurge.log 2>&1
 ```
