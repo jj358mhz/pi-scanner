@@ -64,14 +64,10 @@ sudo apt-get upgrade
 (wait)
 (reboot)
 ```
-```bash
-sudo rpi-update
-(reboot)
-```
 # Step 2: Install Darkice & its Dependencies
 This installs the Darkice package and its dependencies for file trimming and processing
 ```bash
-sudo apt-get install darkice
+sudo apt-get install darkice -y
 ```
 
 ## Install the SoX (Sound Exchange) & id3v2 Tag Packages
