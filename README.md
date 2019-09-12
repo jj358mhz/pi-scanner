@@ -163,10 +163,14 @@ Ensure that you have the gawk package installed on your OS (apt-get install gawk
 ```bash
 sudo apt-get install gawk -y
 ```
+#### Folder Creation for dbpurge
+```bash
+sudo mkdir /home/pi/dbpurge
+sudo mkdir /etc/dbpurge
+```
 #### Copy files to Destination Folders (from the scannerpi repo folder)
 ```bash
 sudo cp dbpurge /usr/local/bin/dbpurge
-sudo mkdir /etc/dbpurge
 sudo cp dbpurge.conf /etc/dbpurge/dbpurge.conf   
 ```
 #### Edit Permission & Ownership
