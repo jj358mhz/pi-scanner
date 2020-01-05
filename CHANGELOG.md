@@ -4,7 +4,7 @@
 UPDATED:
 - `alerts_slack.py` for Python3
 
-# Version 2.3.1 - (09-Sept-2019)
+## Version 2.3.1 - (09-Sept-2019)
 UPDATED:
 - Corrected `FILE_COUNT` calculation
 
