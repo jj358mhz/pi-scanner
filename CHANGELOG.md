@@ -1,22 +1,36 @@
 # CHANGELOG
 
-# Version 2.3.2 - (05-Jan-2020)
-UPDATED:
+# Version 2.3.3 - (27-Mar-2020)
+*Corona Boredom*
+## UPDATED:
+- `alerts_email.py` for Python3
+- `stats.py` for Python3
+## ADDED:
+- `status_codes.json` file
+## CORRECTED:
+- `CHANGELOG.md` syntax
+
+## Version 2.3.2 - (05-Jan-2020)
+### UPDATED:
 - `alerts_slack.py` for Python3
 
 ## Version 2.3.1 - (09-Sept-2019)
-UPDATED:
+### UPDATED:
 - Corrected `FILE_COUNT` calculation
 
 ## Version 2.3.0 - (27-May-2019)
-UPDATED:
-- Renamed `dbpurge.sh` file to `dbpurge`
+### UPDATED:
 - Refactored code to run on Debian Stretch
+### ADDED:
+- Renamed `dbpurge.sh` file to `dbpurge`
 
 ## Version 2.2.1 - (04-March-2019)
-* ADDED: `stats.py` script to allow feed listener email notifications
-* FIXED: Conditional check from `greater than or equal` to `greater than`
-* UPDATED: Renamed `dbpurge` file to `dbpurge.sh` 
+### ADDED:
+- `stats.py` script to allow feed listener email notifications
+### FIXED:
+- Conditional check from `greater than or equal` to `greater than`
+### UPDATED:
+- Renamed `dbpurge` file to `dbpurge.sh` 
 
 ## Version 2.2.0 - (04-March-2019)
 ### ADDED
