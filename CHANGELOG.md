@@ -1,13 +1,20 @@
 # CHANGELOG
 
-# Version 2.3.3 - (27-Mar-2020)
-*Corona Boredom*
+# Version 2.4.0 - (29-Apr-2020)
+*More Corona Boredom*
 ## UPDATED:
+- `alerts_slack.py` for Python3
+- `stats.py` for Python3
+- `alerts_email.py` for Python3
+
+## Version 2.3.3 - (27-Mar-2020)
+*Corona Boredom*
+### UPDATED:
 - `alerts_email.py` for Python3
 - `stats.py` for Python3
-## ADDED:
+### ADDED:
 - `status_codes.json` file
-## CORRECTED:
+### CORRECTED:
 - `CHANGELOG.md` syntax
 
 ## Version 2.3.2 - (05-Jan-2020)
