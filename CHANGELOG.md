@@ -1,8 +1,13 @@
 # CHANGELOG
 
-# Version 2.4.0 - (29-Apr-2020)
+# Version 2.4.1 - (25-Oct-2020)
 *More Corona Boredom*
-## UPDATED:
+## CORRECTED:
+- `alerts_slack.py` logging level in Slack POST
+
+## Version 2.4.0 - (29-Apr-2020)
+*More Corona Boredom*
+### UPDATED:
 - `alerts_slack.py` for Python3
 - `stats.py` for Python3
 - `alerts_email.py` for Python3

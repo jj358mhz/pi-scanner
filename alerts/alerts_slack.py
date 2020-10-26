@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# VERSION: 2.4.0
+# VERSION: 2.4.1
 
 ##################################################################
 
@@ -109,7 +109,7 @@ def main():
     else:
         if listeners >= ALERT_THRESHOLD:
             slack_post(slack_payload_feed_up)
-    syslog.syslog(syslog.LOG_INFO,
+            syslog.syslog(syslog.LOG_INFO,
                   'Listener threshold {} exceeded, the number of listeners = {}, firing a Slack alert'.format(
                       ALERT_THRESHOLD, listeners))
 
