@@ -1,8 +1,13 @@
 # CHANGELOG
 
-# Version 2.4.1 - (25-Oct-2020)
+# Version 2.4.2 - (02-Feb-2021)
 *More Corona Boredom*
 ## CORRECTED:
+- `alerts_slack.py` formatting statement indent
+
+## Version 2.4.1 - (25-Oct-2020)
+*More Corona Boredom*
+### CORRECTED:
 - `alerts_slack.py` logging level in Slack POST
 
 ## Version 2.4.0 - (29-Apr-2020)

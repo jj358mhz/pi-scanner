@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# VERSION: 2.4.1
+# VERSION: 2.4.2
 
 ##################################################################
 
@@ -28,7 +28,6 @@
 import json
 import requests
 import syslog
-
 
 # The Broadcastify API endpoint URL ** DO NOT ALTER **
 BROADCASTIFY_API_URL = 'https://api.broadcastify.com/owner/?a=feed&feedId='
@@ -110,8 +109,8 @@ def main():
         if listeners >= ALERT_THRESHOLD:
             slack_post(slack_payload_feed_up)
             syslog.syslog(syslog.LOG_INFO,
-                  'Listener threshold {} exceeded, the number of listeners = {}, firing a Slack alert'.format(
-                      ALERT_THRESHOLD, listeners))
+                          'Listener threshold {} exceeded, the number of listeners = {}, firing a Slack alert'.format(
+                              ALERT_THRESHOLD, listeners))
 
 
 if __name__ == '__main__':
