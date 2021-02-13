@@ -86,8 +86,8 @@ def main():
         "text": "*{} Broadcastify Alert* :cop::fire:\n"
                 "Listener threshold *{}* exceeded, the number of listeners = *{}*\n"
                 "Broadcastify status code is: {} <healthy is 1, unhealthy is 0>\n"
-                "Listen to the feed here: <http://www.broadcastify.com/listen/feed/{}>\n"
-                "Manage the feed here: <http://www.broadcastify.com/manage/feed/{}>".format(descr, ALERT_THRESHOLD,
+                "Listen to the feed here: <https://www.broadcastify.com/listen/feed/{}>\n"
+                "Manage the feed here: <https://www.broadcastify.com/manage/feed/{}>".format(descr, ALERT_THRESHOLD,
                                                                                             listeners,
                                                                                             status,
                                                                                             FEED_ID,
@@ -98,7 +98,7 @@ def main():
         "text": "*{} Broadcastify Alert* :ghost:\n"
                 "*FEED IS DOWN*\n"
                 "Broadcastify status code is: {} <healthy is 1, unhealthy is 0>\n"
-                "Manage the feed here: <http://www.broadcastify.com/manage/feed/{}>".format(descr, status, FEED_ID)
+                "Manage the feed here: <https://www.broadcastify.com/manage/feed/{}>".format(descr, status, FEED_ID)
     }
 
     # Calls the Slack webhook for message POST'ing

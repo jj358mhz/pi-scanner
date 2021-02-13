@@ -45,8 +45,8 @@ listeners = data['Feed'][0]['listeners']
 
 alertSubject = "{} Broadcastify Alert".format(descr)
 alertBody = "Broadcastify listener threshold {} exceeded ".format(alertThreshold) + " listeners.  "
-alertBody += "Listen to the feed here http://www.broadcastify.com/listen/feed/" + feedID + "  "
-alertBody += "Manage the feed here http://www.broadcastify.com/manage/feed/" + feedID + "  "
+alertBody += "Listen to the feed here https://www.broadcastify.com/listen/feed/" + feedID + "  "
+alertBody += "Manage the feed here https://www.broadcastify.com/manage/feed/" + feedID + "  "
 alertBody += "The current number of listeners is {}".format(listeners) + "  "
 
 if listeners > alertThreshold:
