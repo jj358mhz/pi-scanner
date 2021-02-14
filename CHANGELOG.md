@@ -1,8 +1,16 @@
 # CHANGELOG
 
-# Version 2.4.2 - (02-Feb-2021)
+# Version 2.4.3 - (13-Feb-2021)
 *More Corona Boredom*
-## CORRECTED:
+## UPDATED:
+- Logging statements now leverage f-strings
+- Feed URLs now use `https`
+- Function adjustment to the `DATA` dictionary
+- `alerts_email.py` to version 2.4.3
+
+## Version 2.4.2 - (02-Feb-2021)
+*More Corona Boredom*
+### CORRECTED:
 - `alerts_slack.py` formatting statement indent
 
 ## Version 2.4.1 - (25-Oct-2020)
