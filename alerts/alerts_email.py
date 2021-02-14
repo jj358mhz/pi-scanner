@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# VERSION: 2.4.0
+# VERSION: 2.4.1
 
 ##################################################################
 
@@ -27,28 +27,54 @@
 
 import json
 import os
-import urllib.request
+import requests
+import syslog
 
-feedID = ''  # ENTER YOUR BROADCASTIFY FEED ID HERE
-username = ''  # ENTER YOUR BROADCASTIFY USERNAME HERE
-password = ''  # ENTER YOUR BROADCASTIFY PASSWORD HERE
-email = ''  # ENTER YOUR ALERT DESTINATION EMAIL HERE
+# The Broadcastify API endpoint URL ** DO NOT ALTER **
+BROADCASTIFY_API_URL = 'https://api.broadcastify.com/owner/?a=feed&feedId='
+
+# Enter the account data for your Broadcastify feed
+FEED_ID = ''  # ENTER YOUR BROADCASTIFY FEED ID HERE
+USERNAME = ''  # ENTER YOUR BROADCASTIFY USERNAME HERE
+PASSWORD = ''  # ENTER YOUR BROADCASTIFY PASSWORD HERE
+EMAIL = ''  # ENTER YOUR ALERT DESTINATION EMAIL HERE
 
 # This threshold amount is the number of listeners that need to be exceeded before email alerts are sent out
-alertThreshold = 20  # ENTER YOUR DESIRED ALERT LISTENER THRESHOLD HERE
+ALERT_THRESHOLD = 0  # ENTER YOUR DESIRED ALERT LISTENER THRESHOLD HERE
 
-url = "https://api.broadcastify.com/owner/?a=feed&feedId=" + feedID + "&type=json&u=" + username + "&p=" + password
-response = urllib.request.urlopen(url)
-data = json.load(response)
-descr = data['Feed'][0]['descr']
-listeners = data['Feed'][0]['listeners']
 
-alertSubject = "{} Broadcastify Alert".format(descr)
-alertBody = "Broadcastify listener threshold {} exceeded ".format(alertThreshold) + " listeners.  "
-alertBody += "Listen to the feed here https://www.broadcastify.com/listen/feed/" + feedID + "  "
-alertBody += "Manage the feed here https://www.broadcastify.com/manage/feed/" + feedID + "  "
-alertBody += "The current number of listeners is {}".format(listeners) + "  "
+def broadcastify_request():
+    """Fetches the response from the Broadcastify feed API"""
+    global BROADCASTIFY_API_URL, FEED_ID, USERNAME, PASSWORD
+    url = BROADCASTIFY_API_URL + FEED_ID + '&type=json&u=' + USERNAME + '&p=' + PASSWORD
+    data = {}  # Sets empty data dictionary
+    try:
+        r = requests.get(url)
+        data = r.json()
+        syslog.syslog(syslog.LOG_INFO, f"Broadcastify API endpoint healthy, response data is: {data}")
+    except ConnectionError as error:
+        syslog.syslog(syslog.LOG_ALERT, f"Broadcastify API endpoint returned error code {error}")
+    return data
 
-if listeners > alertThreshold:
-    cmd = 'echo ' + alertBody + ' | mail -s "' + alertSubject + '" ' + email
-    os.system(cmd)
+
+def main():
+    """Main executable"""
+    global ALERT_THRESHOLD, FEED_ID
+    # Parses the Broadcastify JSON response
+    response = broadcastify_request()
+    descr = response['Feed'][0]['descr']
+    listeners = response['Feed'][0]['listeners']
+
+    alertSubject = f"{descr} Broadcastify Alert"
+    alertBody = f"Broadcastify listener threshold {ALERT_THRESHOLD} exceeded " + " listeners.  "
+    alertBody += "Listen to the feed here https://www.broadcastify.com/listen/feed/" + FEED_ID + "  "
+    alertBody += "Manage the feed here https://www.broadcastify.com/manage/feed/" + FEED_ID + "  "
+    alertBody += "The current number of listeners is {}".format(listeners) + "  "
+
+    if listeners > ALERT_THRESHOLD:
+        cmd = 'echo ' + alertBody + ' | mail -s "' + alertSubject + '" ' + EMAIL
+        os.system(cmd)
+
+
+if __name__ == '__main__':
+    main()

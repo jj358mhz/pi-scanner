@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# VERSION: 2.4.2
+# VERSION: 2.4.3
 
 ##################################################################
 
@@ -41,23 +41,21 @@ PASSWORD = ''  # ENTER YOUR BROADCASTIFY PASSWORD HERE
 ALERT_THRESHOLD = 0  # ENTER YOUR DESIRED ALERT LISTENER THRESHOLD HERE
 
 # The Slack endpoint URL
-WEBHOOK_URL = ''  # ENTER YOUR SLACK WEBHOOK URL HERE
-
-# Sets empty data dictionary
-DATA = {}
+WEBHOOK_URL = ''  # ENTER SLACK WEBHOOK URL
 
 
 def broadcastify_request():
     """Fetches the response from the Broadcastify feed API"""
-    global BROADCASTIFY_API_URL, FEED_ID, USERNAME, PASSWORD, DATA
+    global BROADCASTIFY_API_URL, FEED_ID, USERNAME, PASSWORD
     url = BROADCASTIFY_API_URL + FEED_ID + '&type=json&u=' + USERNAME + '&p=' + PASSWORD
+    data = {}  # Sets empty data dictionary
     try:
         r = requests.get(url)
-        DATA = r.json()
-        syslog.syslog(syslog.LOG_INFO, 'Broadcastify API endpoint healthy, response data is: {}'.format(DATA))
+        data = r.json()
+        syslog.syslog(syslog.LOG_INFO, f"Broadcastify API endpoint healthy, response data is: {data}")
     except ConnectionError as error:
-        syslog.syslog(syslog.LOG_ALERT, 'Broadcastify API endpoint returned error code {}'.format(error))
-    return DATA
+        syslog.syslog(syslog.LOG_ALERT, f"Broadcastify API endpoint returned error code {error}")
+    return data
 
 
 def slack_post(slack_payload):
@@ -65,10 +63,8 @@ def slack_post(slack_payload):
     global WEBHOOK_URL
     sp = requests.post(WEBHOOK_URL, data=json.dumps(slack_payload), headers={'Content-Type': 'application/json'})
     if sp.status_code != 200:
-        raise ValueError('Request to Slack returned an error %s, the response is:\n'
-                         '%s' % (sp.status_code, sp.text))
-    syslog.syslog(syslog.LOG_ALERT,
-                  'Request to Slack returned a {}, the response is: {}'.format(sp.status_code, sp.text))
+        raise ValueError(f"Request to Slack returned an error {sp.status_code}, the response is: {sp.text}")
+    syslog.syslog(syslog.LOG_ALERT, f"Request to Slack returned a {sp.status_code}, the response is: {sp.text}")
     return sp.status_code
 
 
@@ -76,41 +72,36 @@ def main():
     """Main executable"""
     global ALERT_THRESHOLD, FEED_ID
     # Parses the Broadcastify JSON response
-    broadcastify_request()
-    descr = DATA['Feed'][0]['descr']
-    listeners = DATA['Feed'][0]['listeners']
-    status = DATA['Feed'][0]['status']
+    response = broadcastify_request()
+    descr = response['Feed'][0]['descr']
+    listeners = response['Feed'][0]['listeners']
+    status = response['Feed'][0]['status']
 
     # Slack status message payloads
     slack_payload_feed_up = {
-        "text": "*{} Broadcastify Alert* :cop::fire:\n"
-                "Listener threshold *{}* exceeded, the number of listeners = *{}*\n"
-                "Broadcastify status code is: {} <healthy is 1, unhealthy is 0>\n"
-                "Listen to the feed here: <https://www.broadcastify.com/listen/feed/{}>\n"
-                "Manage the feed here: <https://www.broadcastify.com/manage/feed/{}>".format(descr, ALERT_THRESHOLD,
-                                                                                            listeners,
-                                                                                            status,
-                                                                                            FEED_ID,
-                                                                                            FEED_ID)
+        "text": f"*{descr} Broadcastify Alert* :cop::fire:\n"
+                f"Listener threshold *{ALERT_THRESHOLD}* exceeded, the number of listeners = *{listeners}*\n"
+                f"Broadcastify status code is: {status} <healthy is 1, unhealthy is 0>\n"
+                f"Listen to the feed here: <https://www.broadcastify.com/listen/feed/{FEED_ID}>\n"
+                f"Manage the feed here: <https://www.broadcastify.com/manage/feed/{FEED_ID}>"
     }
 
     slack_payload_feed_down = {
-        "text": "*{} Broadcastify Alert* :ghost:\n"
+        "text": f"*{descr} Broadcastify Alert* :ghost:\n"
                 "*FEED IS DOWN*\n"
-                "Broadcastify status code is: {} <healthy is 1, unhealthy is 0>\n"
-                "Manage the feed here: <https://www.broadcastify.com/manage/feed/{}>".format(descr, status, FEED_ID)
+                f"Broadcastify status code is: {status} <healthy is 1, unhealthy is 0>\n"
+                f"Manage the feed here: <https://www.broadcastify.com/manage/feed/{FEED_ID}>"
     }
 
     # Calls the Slack webhook for message POST'ing
     if not status:
         slack_post(slack_payload_feed_down)
-        syslog.syslog(syslog.LOG_ALERT, 'Feed is down')
+        syslog.syslog(syslog.LOG_ALERT, "Feed is down")
     else:
         if listeners >= ALERT_THRESHOLD:
             slack_post(slack_payload_feed_up)
-            syslog.syslog(syslog.LOG_INFO,
-                          'Listener threshold {} exceeded, the number of listeners = {}, firing a Slack alert'.format(
-                              ALERT_THRESHOLD, listeners))
+            syslog.syslog(syslog.LOG_INFO, f"Listener threshold {ALERT_THRESHOLD} exceeded,\n"
+                                           f"the number of listeners = {listeners}, firing a Slack alert")
 
 
 if __name__ == '__main__':
