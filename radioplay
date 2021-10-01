@@ -49,35 +49,33 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 CONFIGFILE=/etc/radioplay/radioplay.conf
 
 #  In normal usage no changes should be made below...
-PID=`(systemctl show -p MainPID darkice.service 2>/dev/null | cut -d= -f2)`
+PID=$(systemctl show -p MainPID darkice.service 2>/dev/null | cut -d= -f2)
 LIBDIR=/var/lib/radioplay
-RPINDEX=`cat /var/lib/radioplay/radioplay.index`
-UNIXTIME=`date +%s`
-TIMESTAMP=`date +%F-%a-%H%M`
+RPINDEX=$(cat /var/lib/radioplay/radioplay.index)
+TIMESTAMP=$(date +%F-%a-%H%M)
 
 # Check and load the conf file
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
 
 # Don't allow disk use above 90% regardless of what is in conf file...
 #  if you use separate partitions then you might be able to use more than 90
-if [ $DISK_CAP -gt "90" ] ; then DISK_CAP=90 ;  fi
+if [ "$DISK_CAP" -gt "90" ] ; then DISK_CAP=90 ;  fi
 
 # Check for a prep command
 case "$1" in
 	init)
-	echo -n "Initializing radioplay \n"
-	echo $TIMESTAMP > $LIBDIR/radioplay.index
-	echo $UNIXTIME > $LIBDIR/drupalplay.index
+	printf "Initializing radioplay \n"
+	echo "$TIMESTAMP" > $LIBDIR/radioplay.index
 	[ -f /tmp/radioplay_active.mp3 ] && sudo chmod 644 /tmp/radioplay_active.mp3
 	;;
 
 	cron)
-	echo "$LIBDIR/$RPINDEX.mp3" > /tmp/darkice.file-0.$PID
-	kill -s 10 $PID
-	echo $TIMESTAMP > $LIBDIR/radioplay.index
-	echo $UNIXTIME > $LIBDIR/drupalplay.index
+	echo "$LIBDIR/$RPINDEX.mp3" > /tmp/darkice.file-0."$PID"
+	kill -s 10 "$PID"
+	echo "$TIMESTAMP" > $LIBDIR/radioplay.index
+	echo "$UNIXTIME" > $LIBDIR/drupalplay.index
 	sleep 5
-	/usr/bin/id3v2 --artist "$ID3V2ARTIST" --album "$ID3V2ALBUM" --song "$ID3V2SONG" --year "$ID3V2YEAR" --comment "$ID3V2DESC" $LIBDIR/$RPINDEX.mp3
+	/usr/bin/id3v2 --artist "$ID3V2ARTIST" --album "$ID3V2ALBUM" --song "$ID3V2SONG" --year "$ID3V2YEAR" --comment "$ID3V2DESC" $LIBDIR/"$RPINDEX.mp3"
 
 	if [[ "$SAVETYPE" = "all" || "$SAVETYPE" = "full" ]]
 	then # save full recording
@@ -94,10 +92,10 @@ case "$1" in
 		chown "$ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER" "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION""_trimmed.mp3"
 	fi
 
-	rm $LIBDIR/$RPINDEX.mp3 && rm /tmp/darkice.file-0.$PID # cleanup
+	rm $LIBDIR/"$RPINDEX.mp3" && rm /tmp/darkice.file-0."$PID" # cleanup
 
 	# First, purge recording files that are older than our max age for them...
-	find $ARCHIVE_FOLDER -iname '*.mp3' -mmin +$ARCHIVE_AGE -print0 | xargs -0 --no-run-if-empty  /bin/rm
+	find "$ARCHIVE_FOLDER" -iname '*.mp3' -mmin +"$ARCHIVE_AGE" -print0 | xargs -0 --no-run-if-empty  /bin/rm
 
 	# Next, delete some more if we need the disk space AND there are some to delete...
 	while  [ $DISK_CAP -lt `df -H $ARCHIVE_FOLDER | sed '1d' | awk '{print $5}' | cut -d'%' -f1` ] && \
