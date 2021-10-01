@@ -59,7 +59,9 @@ TIMESTAMP=$(date +%F-%a-%H%M)
 
 # Don't allow disk use above 90% regardless of what is in conf file...
 #  if you use separate partitions then you might be able to use more than 90
-if [ "$DISK_CAP" -gt "90" ] ; then DISK_CAP=90 ;  fi
+if [ "$DISK_CAP" -gt "90" ];then
+	DISK_CAP=90;
+fi
 
 # Check for a prep command
 case "$1" in
@@ -77,19 +79,18 @@ case "$1" in
 	sleep 5
 	/usr/bin/id3v2 --artist "$ID3V2ARTIST" --album "$ID3V2ALBUM" --song "$ID3V2SONG" --year "$ID3V2YEAR" --comment "$ID3V2DESC" $LIBDIR/"$RPINDEX.mp3"
 
-	if [[ "$SAVETYPE" = "all" || "$SAVETYPE" = "full" ]]
-	then # save full recording
+	 # save full recording
+	if [[ "$SAVETYPE" = "all" || "$SAVETYPE" = "full" ]];then
 		cp "$LIBDIR/$RPINDEX.mp3" "$ARCHIVE_FOLDER/"
 		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX.mp3"
 		chown "$ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER" "$ARCHIVE_FOLDER/$RPINDEX.mp3"
 	fi
 
-	if [[ "$SAVETYPE" = "all" || "$SAVETYPE" = "trim" ]]
-		then # save trimmed recording
-		sox "$LIBDIR/$RPINDEX.mp3" "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION""_trimmed.mp3" \
-			silence -l 1 0.1 "$THSHOLD" -1 1.0 "$THSHOLD" tempo "$TEMPO"
-		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION""_trimmed.mp3"
-		chown "$ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER" "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION""_trimmed.mp3"
+	# save trimmed recording
+	if [[ "$SAVETYPE" = "all" || "$SAVETYPE" = "trim" ]];then
+		sox "$LIBDIR/$RPINDEX.mp3" "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3" silence -l 1 0.1 "$THSHOLD" -1 1.0 "$THSHOLD" tempo "$TEMPO"
+		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3"
+		chown "$ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER" "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3"
 	fi
 
 	rm $LIBDIR/"$RPINDEX.mp3" && rm /tmp/darkice.file-0."$PID" # cleanup
