@@ -81,9 +81,9 @@ case "$1" in
 
 	if [[ "$SAVETYPE" = "all" || "$SAVETYPE" = "full" ]]
 	then # save full recording
-		cp $LIBDIR/$RPINDEX.mp3 $ARCHIVE_FOLDER/
-		chmod 644 $ARCHIVE_FOLDER/$RPINDEX.mp3
-		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER $ARCHIVE_FOLDER/$RPINDEX.mp3
+		cp "$LIBDIR/$RPINDEX.mp3" "$ARCHIVE_FOLDER/"
+		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX.mp3"
+		chown "$ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER" "$ARCHIVE_FOLDER/$RPINDEX.mp3"
 	fi
 
 	if [[ "$SAVETYPE" = "all" || "$SAVETYPE" = "trim" ]]
