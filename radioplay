@@ -103,7 +103,7 @@ case "$1" in
 	while  [ $DISK_CAP -lt `df -H $ARCHIVE_FOLDER | sed '1d' | awk '{print $5}' | cut -d'%' -f1` ] && \
 		[ "$(find $ARCHIVE_FOLDER -maxdepth 1 -name '*.mp3' -print -quit)" ]
 	do
-	  rm $(ls -tr $ARCHIVE_FOLDER/*.mp3 | head -n 1)
+		rm $(ls -tr $ARCHIVE_FOLDER/*.mp3 | head -n 1)
 	done
 
 	# Cleanup
@@ -112,7 +112,8 @@ case "$1" in
 
 	*)
 	echo "Usage: $0 {init|cron}" >&2
-        exit 1
+
+	exit 1
 	;;
 esac
 
