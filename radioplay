@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -v
 
 set -x
 
@@ -9,12 +9,13 @@ set -x
 #  and optionally save copy of audio with dead air removed and sped up
 #  No Warranty is implied, promised or permitted.
 
-# Note that radioplay needs to be run as root since Darkice needs to run as root.
+# Note: radioplay needs to be run as root since Darkice needs to run as root.
 
-# Create these Folders if they don't exist:
-# /etc/radioplay
-# /var/lib/radioplay
-# and whatever archive folder you list below as ARCHIVE_FOLDER
+# REQUIRED
+## Create these Folders if they don't exist:
+## /etc/radioplay
+## /var/lib/radioplay
+## /path/to/your/ARCHIVE_FOLDER
 
 #  Note that if system is rebooted then the next file save will only include from the time of
 #  reboot (or system start) to the top of the hour (or time cron last ran).
@@ -26,7 +27,9 @@ set -x
 
 #  Add the following line to root's crontab (via sudo crontab -e):
 #       00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
-#   This will create an archive every hour on the hour.
+#       This will create an archive every hour on the hour.
+#  Another cron alternative is to create a radioplay file and place it in /etc/cron.d/ containing the
+#  cron line as shown above.
 
 # Example of job definition:
 # .---------------- minute (0 - 59)
@@ -57,11 +60,10 @@ TIMESTAMP=`date +%F-%a-%H%M`
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
 
 # Don't allow disk use above 90% regardless of what is in conf file...
-#  if you use seperate partitions then you might be able to use more than 90
-	if [ $DISK_CAP -gt "90" ] ; then DISK_CAP=90 ;  fi
+#  if you use separate partitions then you might be able to use more than 90
+if [ $DISK_CAP -gt "90" ] ; then DISK_CAP=90 ;  fi
 
 # Check for a prep command
-
 case "$1" in
 	init)
 	echo -n "Initializing radioplay \n"
@@ -83,8 +85,6 @@ case "$1" in
 		cp $LIBDIR/$RPINDEX.mp3 $ARCHIVE_FOLDER/
 		chmod 644 $ARCHIVE_FOLDER/$RPINDEX.mp3
 		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER $ARCHIVE_FOLDER/$RPINDEX.mp3
-		# upload full to Dropbox
-		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload $LIBDIR/$RPINDEX.mp3 /$RPINDEX.mp3
 	fi
 
 	if [ "$SAVETYPE" = "all" -o "$SAVETYPE" = "trim" ]
@@ -93,36 +93,21 @@ case "$1" in
 			silence -l 1 0.1 $THSHOLD -1 1.0 $THSHOLD tempo $TEMPO
 		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION"_trimmed.mp3
 		chown $ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION"_trimmed.mp3
-		# upload trim to Dropbox
-		[ $USEDROPBOX = "yes" ] && sudo -u pi $DBSCRIPT upload "$ARCHIVE_FOLDER/$RPINDEX"_"$SHORT_LOCATION"_trimmed.mp3 "/$RPINDEX"_"$SHORT_LOCATION"_trimmed.mp3
 	fi
 
 	rm $LIBDIR/$RPINDEX.mp3 && rm /tmp/darkice.file-0.$PID # cleanup
 
-#  Uncomment the following if uploading the file...
-       	#  scp $LIBDIR_FOLDER/$RPINDEX.mp3 $REMOTEUSER@$REMOTESITE:$REMOTEFOLDER/$DPINDEX.mp3
-
-###########################################################################################
-
-# File purge
-# REQUIRES (from /etc/radioplay/radioplay.conf):
-#       ARCHIVE_FOLDER
-#       ARCHIVE_AGE: Max number of minutes to keep recordings
-#       DISK_CAP: Max allowed disk use (percentage) for partition where archive folder resides
-
-# first purge recording files that are older than our max age for them...
-
+# First, purge recording files that are older than our max age for them...
 	find $ARCHIVE_FOLDER -iname '*.mp3' -mmin +$ARCHIVE_AGE -print0 | xargs -0 --no-run-if-empty  /bin/rm
 
-# next delete some more if we need the disk space AND there are some to delete...
-
+# Next, delete some more if we need the disk space AND there are some to delete...
 	while  [ $DISK_CAP -lt `df -H $ARCHIVE_FOLDER | sed '1d' | awk '{print $5}' | cut -d'%' -f1` ] && \
 		[ "$(find $ARCHIVE_FOLDER -maxdepth 1 -name '*.mp3' -print -quit)" ]
 	do
-	        rm $(ls -tr $ARCHIVE_FOLDER/*.mp3 | head -n 1)
+	  rm $(ls -tr $ARCHIVE_FOLDER/*.mp3 | head -n 1)
 	done
-# END of file purge
 
+# Cleanup
 	[ -f /tmp/radioplay_active.mp3 ] && sudo chmod 644 /tmp/radioplay_active.mp3 # allow copying of active recording
 	;;
 
