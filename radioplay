@@ -52,7 +52,6 @@ CONFIGFILE=/etc/radioplay/radioplay.conf
 PID=`(systemctl show -p MainPID darkice.service 2>/dev/null | cut -d= -f2)`
 LIBDIR=/var/lib/radioplay
 RPINDEX=`cat /var/lib/radioplay/radioplay.index`
-DPINDEX=`cat /var/lib/radioplay/drupalplay.index`
 UNIXTIME=`date +%s`
 TIMESTAMP=`date +%F-%a-%H%M`
 
