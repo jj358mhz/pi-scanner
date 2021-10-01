@@ -97,17 +97,17 @@ case "$1" in
 
 	rm $LIBDIR/$RPINDEX.mp3 && rm /tmp/darkice.file-0.$PID # cleanup
 
-  # First, purge recording files that are older than our max age for them...
+	# First, purge recording files that are older than our max age for them...
 	find $ARCHIVE_FOLDER -iname '*.mp3' -mmin +$ARCHIVE_AGE -print0 | xargs -0 --no-run-if-empty  /bin/rm
 
-  # Next, delete some more if we need the disk space AND there are some to delete...
+	# Next, delete some more if we need the disk space AND there are some to delete...
 	while  [ $DISK_CAP -lt `df -H $ARCHIVE_FOLDER | sed '1d' | awk '{print $5}' | cut -d'%' -f1` ] && \
 		[ "$(find $ARCHIVE_FOLDER -maxdepth 1 -name '*.mp3' -print -quit)" ]
 	do
 	  rm $(ls -tr $ARCHIVE_FOLDER/*.mp3 | head -n 1)
 	done
 
-  # Cleanup
+	# Cleanup
 	[ -f /tmp/radioplay_active.mp3 ] && sudo chmod 644 /tmp/radioplay_active.mp3 # allow copying of active recording
 	;;
 
