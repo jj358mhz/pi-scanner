@@ -75,7 +75,6 @@ case "$1" in
 	echo "$LIBDIR/$RPINDEX.mp3" > /tmp/darkice.file-0."$PID"
 	kill -s 10 "$PID"
 	echo "$TIMESTAMP" > $LIBDIR/radioplay.index
-	echo "$UNIXTIME" > $LIBDIR/drupalplay.index
 	sleep 5
 	/usr/bin/id3v2 --artist "$ID3V2ARTIST" --album "$ID3V2ALBUM" --song "$ID3V2SONG" --year "$ID3V2YEAR" --comment "$ID3V2DESC" $LIBDIR/"$RPINDEX.mp3"
 
