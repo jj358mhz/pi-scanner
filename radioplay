@@ -57,7 +57,13 @@ ARCHIVE_FOLDER_SIZE=$(df -H "$ARCHIVE_FOLDER" | sed '1d' | awk '{print $5}' | cu
 PURGABLE_FILES=$(ls -tr "$ARCHIVE_FOLDER"/*.mp3 | head -n 1)
 
 # Check and load the conf file
-[ -f "$CONFIGFILE" ] && . $CONFIGFILE
+# shellcheck source=src/util.sh
+if [ -f "$CONFIGFILE" ];then
+	 . $CONFIGFILE
+else
+	echo "Config file not found"
+	exit 1
+fi
 
 # Don't allow disk use above 90% regardless of what is in conf file...
 #  if you use separate partitions then you might be able to use more than 90
