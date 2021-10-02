@@ -53,6 +53,8 @@ PID=$(systemctl show -p MainPID darkice.service 2>/dev/null | cut -d= -f2)
 LIBDIR=/var/lib/radioplay
 RPINDEX=$(cat /var/lib/radioplay/radioplay.index)
 TIMESTAMP=$(date +%F-%a-%H%M)
+ARCHIVE_FOLDER_SIZE=$(df -H "$ARCHIVE_FOLDER" | sed '1d' | awk '{print $5}' | cut -d'%' -f1)
+PURGABLE_FILES=$(ls -tr "$ARCHIVE_FOLDER"/*.mp3 | head -n 1)
 
 # Check and load the conf file
 [ -f "$CONFIGFILE" ] && . $CONFIGFILE
@@ -98,10 +100,9 @@ case "$1" in
 	find "$ARCHIVE_FOLDER" -iname '*.mp3' -mmin +"$ARCHIVE_AGE" -print0 | xargs -0 --no-run-if-empty  /bin/rm
 
 	# Next, delete some more if we need the disk space AND there are some to delete...
-	while  [ $DISK_CAP -lt `df -H $ARCHIVE_FOLDER | sed '1d' | awk '{print $5}' | cut -d'%' -f1` ] && \
-		[ "$(find $ARCHIVE_FOLDER -maxdepth 1 -name '*.mp3' -print -quit)" ]
+	while  [ $DISK_CAP -lt "$ARCHIVE_FOLDER_SIZE" ] && [ "$(find "$ARCHIVE_FOLDER" -maxdepth 1 -name '*.mp3' -print -quit)" ]
 	do
-		rm $(ls -tr $ARCHIVE_FOLDER/*.mp3 | head -n 1)
+		rm "$PURGABLE_FILES"
 	done
 
 	# Cleanup
