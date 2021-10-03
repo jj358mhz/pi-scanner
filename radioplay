@@ -76,7 +76,12 @@ case "$1" in
 	init)
 	printf "Initializing radioplay \n"
 	echo "$TIMESTAMP" > $LIBDIR/radioplay.index
-	[ -f /tmp/radioplay_active.mp3 ] && sudo chmod 644 /tmp/radioplay_active.mp3
+	if [ -f /tmp/radioplay_active.mp3 ];then
+		sudo chmod 644 /tmp/radioplay_active.mp3
+	else
+		echo "Temp file not found"
+		exit 1
+	fi
 	;;
 
 	cron)
@@ -112,7 +117,12 @@ case "$1" in
 	done
 
 	# Cleanup
-	[ -f /tmp/radioplay_active.mp3 ] && sudo chmod 644 /tmp/radioplay_active.mp3 # allow copying of active recording
+	if [ -f /tmp/radioplay_active.mp3 ];then
+		sudo chmod 644 /tmp/radioplay_active.mp3 # allow copying of active recording
+	else
+		echo "Temp file not found"
+		exit 1
+	fi
 	;;
 
 	*)
