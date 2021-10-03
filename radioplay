@@ -54,12 +54,12 @@ LIBDIR=/var/lib/radioplay
 RPINDEX=$(cat /var/lib/radioplay/radioplay.index)
 TIMESTAMP=$(date +%F-%a-%H%M)
 ARCHIVE_FOLDER_SIZE=$(df -H "$ARCHIVE_FOLDER" | sed '1d' | awk '{print $5}' | cut -d'%' -f1)
-PURGABLE_FILES=$(ls -tr "$ARCHIVE_FOLDER"/*.mp3 | head -n 1)
+PURGABLE_FILES=$(find "$ARCHIVE_FOLDER"/*.mp3 | head -n 1)
 
 # Check and load the conf file
 # shellcheck source=src/util.sh
 if [ -f "$CONFIGFILE" ];then
-	 . $CONFIGFILE
+	. $CONFIGFILE
 else
 	echo "Config file not found"
 	exit 1
