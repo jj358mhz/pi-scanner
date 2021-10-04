@@ -9,7 +9,7 @@ scannerpi is a collection of scripts and configuration files that you can use to
 
 ## Audio set-up
 
-* With your USB sound stick installed, in a terminal on the RasPi run the command 
+* With your USB sound stick installed, in a terminal on the RasPi run the command
 
 ```bash
 arecord –l
@@ -27,7 +27,7 @@ Subdevice #0: subdevice #0
 Next connect speakers to the audio jack on the RasPi (not the USB output) and a microphone or other audio input to the USB sound stick. A scanner tuned to NOAA weather with continuous output works well. Adjust the volume to mid level if using a scanner, etc. Then enter:
 
 ```bash
-arecord -D plughw:1,0 temp.wav 
+arecord -D plughw:1,0 temp.wav
 ```
 * In this case we use the plug-in called "plug" to handle format conversion. Otherwise you could use “arecord –D hw:1,0 somefile.wav but you would need to explicitly set the format to match your sound stick. Using “plughw:1,0” makes life easier.
 
@@ -41,7 +41,7 @@ then the recording on the RasPi and USB device is working. If you don’t hear a
 ```bash
 sudo alsamixer
 ```
-(along with the volume control on the radio) to balance the recording level. After entering “alsamixer” press “F6” and select the sound card (maybe called generic USB device), then “F5” to display all controls for that device. 
+(along with the volume control on the radio) to balance the recording level. After entering “alsamixer” press “F6” and select the sound card (maybe called generic USB device), then “F5” to display all controls for that device.
 
 Using one scanner I had to turn the scanner up quite loud, then using alsamixer turn on Auto Gain (arrow over to auto gain and press “**m**” until “**00**” is displayed). Using a different scanner I had to keep it rather low and turn auto gain off (mute) while keeping the capture level at + 9 dB - it’s fair to say “your mileage may vary.”
 
@@ -53,27 +53,27 @@ Once you have a feed running with good audio level you can save the alsamixer se
 sudo alsactl store
 ```
 
-## Updates the Pi's Catalog, Kernel, & Firmware
+## Update the Pi's Catalog, Kernel, & Firmware
 Run these commands is successive order
 ```bash
-sudo apt-get update
+sudo apt update
 (wait)
 ```
 ```bash
-sudo apt-get upgrade
+sudo apt upgrade
 (wait)
 (reboot)
 ```
 # Step 2: Install Darkice & its Dependencies
 This installs the Darkice package and its dependencies for file trimming and processing
 ```bash
-sudo apt-get install darkice -y
+sudo apt install darkice -y
 ```
 
 ## Install the SoX (Sound Exchange) & id3v2 Tag Packages
 This command installs the *sox* package required for mp3 encoding
 ```bash
-sudo apt-get install sox libsox-fmt-mp3 id3v2 -y
+sudo apt install sox libsox-fmt-mp3 id3v2 -y
 ```
 
 # Step 3: Configure & Install Support Scripts
@@ -97,36 +97,37 @@ git clone https://github.com/jj358mhz/scannerpi.git
 * **Update the *darkice.cfg* and *radioplay.conf* configuration files using vi or nano to conform it to your radioreference.com settings**
 * **You may also need to modify the *radioplay* script at the *trim* area to customize the feed mnemonic**
 
-### Edit Permission & Ownership
+## Edit Permission & Ownership
 ```bash
 sudo chown root:root darkice darkice.cfg radioplay radioplay.conf
 sudo chmod 755 radioplay darkice.service
 sudo chmod 644 radioplay.conf darkice.cfg
 ```
 
-### Move Files to Destination Folders
+## Copy Files to Destination Folders
 ```bash
-sudo mv radioplay /usr/local/bin/radioplay
-sudo mv radioplay.conf /etc/radioplay/radioplay.conf
-sudo mv darkice.service /etc/systemd/system/darkice.service
-sudo mv darkice.cfg /etc/darkice.cfg
+sudo cp radioplay /usr/local/bin/radioplay
+sudo cp radioplay.conf /etc/radioplay/radioplay.conf
+sudo cp darkice.service /etc/systemd/system/darkice.service
+sudo cp darkice.cfg /etc/darkice.cfg
 ```
 
-## Step 4: Test and Final Cleanup
+# Step 4: Test and Final Cleanup
 Test DarkIce without archiving
 ```bash
 sudo /usr/bin/darkice
 ```
 Listen to the feed and adjust the levels as needed. If all works as expected then “ctl-c” to stop DarkIce. If you see this error when running DarkIce, “…lame lib opening underlying sink error…” then DarkIce was unable to connect to the server. Check “/etc/darkice.cfg” for the proper entries and make sure the RasPi can access the internet.
 
-### Finalize the Installation
-Update the root's crontab
+## Finalize the Installation
+Create the cron.d file
 ```bash
-sudo crontab -e
+cd /etc/cron.d
+sudo nano radioplay
 ```
 ...and add the following lines
 ```bash
-00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
+00 * * * *   root [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
 ```
 Enable the DarkIce startup service to run at boot & start DarkIce
 ```bash
@@ -138,53 +139,33 @@ sudo systemctl start darkice.service
 
 There is a live working feed accessible here <http://www.jj358mhz.com>
 
-## Step 5: (OPTIONAL)
+# Step 5: (OPTIONAL)
 
-### Dropbox Uploader (third-party download)
+## RClone (third-party download)
+<https://rclone.org/>
 
-<https://github.com/andreafabrizi/Dropbox-Uploader>
+We will leverage it for syncronizing our local /scanneraudio/<files> to Dropbox. NOTE: You can also configure it to integrate into other cloud storage of your choosing.
 
-Dropbox Uploader is a BASH script which can be used to upload, download, delete, list files (and more!) from Dropbox, an online file sharing, synchronization and backup service.
+### Rclone
+Rclone is a command line program to manage files on cloud storage. It is a feature rich alternative to cloud vendors' web storage interfaces. Over 40 cloud storage products support rclone including S3 object stores, business & consumer file storage services
 
-It's written in BASH scripting language and only needs cURL.
-
-Why use this script?
-
-Portable: It's written in BASH scripting and only needs cURL (curl is a tool to transfer data from or to a server, available for all operating systems and installed by default in many linux distributions).
-Secure: It's not required to provide your username/password to this script, because it uses the official Dropbox API for the authentication process.
-Please refer to the <Wiki>(https://github.com/andreafabrizi/Dropbox-Uploader/wiki) for tips and additional information about this project. The Wiki is also the place where you can share your scripts and examples related to Dropbox Uploader.
-
-### Dropbox Purge (dbpurge)
-
-Dropbox purge (dbpurge) is an independent script that allows the user to purge their Dropbox app folder of the oldest archive recording. The script runs as a cron job (user-defined scheduling) and periodically deletes the oldest file using the Dropbox
-
-#### Install GAWK Dependency
-Ensure that you have the gawk package installed on your OS (apt-get install gawk)
+#### Install Rclone
+To install rclone on Linux/macOS/BSD systems, run:
 ```bash
-sudo apt-get install gawk -y
+curl https://rclone.org/install.sh | sudo bash
 ```
-#### Folder Creation for dbpurge
-```bash
-sudo mkdir /home/pi/dbpurge
-sudo mkdir /etc/dbpurge
-```
-#### Copy files to Destination Folders (from the scannerpi repo folder)
-```bash
-sudo cp dbpurge /usr/local/bin/dbpurge
-sudo cp dbpurge.conf /etc/dbpurge/dbpurge.conf   
-```
-#### Edit Permission & Ownership
-```bash
-sudo chmod 755 dbpurge
-sudo chmod 644 dbpurge.conf
-```
+
+#### Configure for Dropbox
+See the configuration documentation for Dropbox here:
+<https://rclone.org/dropbox/>
+
 #### Finalize the Installation
-Update the Pi's crontab
+Create the cron.d file
 ```bash
-crontab -e
+cd /etc/cron.d
+sudo nano radioplay
 ```
-####
 ...and add the following lines
 ```bash
-*/x * * * * /usr/local/bin/dbpurge > /home/pi/dbpurge/dbpurge.log 2>&1
+* * * * * /usr/bin/rclone sync -P /home/pi/scanneraudio/ <YourDropboxAppName>:
 ```

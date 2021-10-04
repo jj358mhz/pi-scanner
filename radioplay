@@ -25,11 +25,9 @@ set -x
 ### /etc/radioplay/radioplay.conf     ( configuration file )
 ### /etc/darkice.cfg                  ( darkice config )
 
-#  Add the following line to root's crontab (via sudo crontab -e):
-#       00 * * * *   [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
+#  Add the following line to a cron.d file </etc/cron.d/radioplay>:
+#       00 * * * *   root [ -x /usr/local/bin/radioplay ] && /usr/local/bin/radioplay cron > /dev/null
 #       This will create an archive every hour on the hour.
-#  Another cron alternative is to create a radioplay file and place it in /etc/cron.d/ containing the
-#  cron line as shown above.
 
 # Example of job definition:
 # .---------------- minute (0 - 59)
