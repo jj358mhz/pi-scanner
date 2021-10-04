@@ -1,8 +1,16 @@
 # CHANGELOG
 
-# Version 2.4.3 - (13-Feb-2021)
-*More Corona Boredom*
+# Version 2.5.0 - (04-Oct-2021)
 ## UPDATED:
+- `radioplay` script conformed to proper BASH syntax
+## REMOVED:
+- `dbpurge` script and `Dropbox-Uploader` dependencies
+## ADDED:
+- Usage of `Rclone` for cloud-based file syncronizing 
+
+## Version 2.4.3 - (13-Feb-2021)
+*More Corona Boredom*
+### UPDATED:
 - Logging statements now leverage f-strings
 - Feed URLs now use `https`
 - Function adjustment to the `DATA` dictionary
@@ -55,16 +63,16 @@
 ### FIXED:
 - Conditional check from `greater than or equal` to `greater than`
 ### UPDATED:
-- Renamed `dbpurge` file to `dbpurge.sh` 
+- Renamed `dbpurge` file to `dbpurge.sh`
 
 ## Version 2.2.0 - (04-March-2019)
 ### ADDED
-- New `alerts_slack.py` script to enable users to send Feed notifications to Slack 
+- New `alerts_slack.py` script to enable users to send Feed notifications to Slack
 - New `alerts_email.py` script to enable users to send Feed notifications to email
 
 ## Version 2.1.0 - (27-December-2018)
 ### ADDED
-- Merry Christmas! `Dbpurge` now allows for maximum file archiving by setting the `DAYS=<value>` parameter in the `dbpurge.conf` file 
+- Merry Christmas! `Dbpurge` now allows for maximum file archiving by setting the `DAYS=<value>` parameter in the `dbpurge.conf` file
 
 ## Version 2.0.0 - (28-July-2017)
 ### UPDATED
