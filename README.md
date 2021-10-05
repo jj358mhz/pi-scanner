@@ -167,5 +167,5 @@ sudo nano radioplay
 ```
 ...and add the following lines
 ```bash
-* * * * * /usr/bin/rclone sync -P /home/pi/scanneraudio/ <YourDropboxAppName>:
+05 * * * * pi /usr/bin/rclone sync -P /home/pi/scanneraudio/ <YourDropboxAppName>:
 ```
