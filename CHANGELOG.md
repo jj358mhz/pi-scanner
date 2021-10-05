@@ -1,12 +1,20 @@
 # CHANGELOG
 
-# Version 2.5.0 - (04-Oct-2021)
-## UPDATED:
-- `radioplay` script conformed to proper BASH syntax
+# Version 2.5.2 - (05-Oct-2021)
 ## REMOVED:
+- Shellcheck for `$CONFIGFILE` loading statement
+
+## Version 2.5.1 - (04-Oct-2021)
+### UPDATED:
+- Rclone cron.d entry
+
+## Version 2.5.0 - (04-Oct-2021)
+### UPDATED:
+- `radioplay` script conformed to proper BASH syntax
+### REMOVED:
 - `dbpurge` script and `Dropbox-Uploader` dependencies
-## ADDED:
-- Usage of `Rclone` for cloud-based file syncronizing 
+### ADDED:
+- Usage of `Rclone` for cloud-based file syncronizing
 
 ## Version 2.4.3 - (13-Feb-2021)
 *More Corona Boredom*
