@@ -1,7 +1,12 @@
 # CHANGELOG
 
-# Version 2.5.2 - (05-Oct-2021)
+# Version 2.5.3 - (06-Oct-2021)
 ## REMOVED:
+- Debugging `set -x` switch
+- Debugging `-v` switch
+
+## Version 2.5.2 - (05-Oct-2021)
+### REMOVED:
 - Shellcheck for `$CONFIGFILE` loading statement
 
 ## Version 2.5.1 - (04-Oct-2021)
