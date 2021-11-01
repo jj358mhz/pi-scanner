@@ -97,7 +97,7 @@ case "$1" in
 
 	# save trimmed recording
 	if [[ "$SAVETYPE" = "all" || "$SAVETYPE" = "trim" ]];then
-		sox "$LIBDIR/$RPINDEX.mp3" "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3" silence -l 1 0.1 "$THSHOLD" -1 1.0 "$THSHOLD" tempo "$TEMPO"
+		sox "$LIBDIR/$RPINDEX.mp3" "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3" silence -l 1 0.1 "$THSHOLD""%" -1 1.0 "$THSHOLD""%" tempo "$TEMPO"
 		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3"
 		chown "$ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER" "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3"
 	fi
