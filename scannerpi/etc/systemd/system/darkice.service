@@ -1,3 +1,4 @@
+[Unit]
 Description=DarkIce live audio streamer
 Documentation=http://www.darkice.org/ man:darkice(1) man:darkice.cfg(5)
 After=icecast.service network-online.target sound.target
