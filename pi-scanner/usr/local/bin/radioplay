@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Log Location on Server.
+LOG_LOCATION=/home/pi/scanneraudio
+exec > >(tee -i $LOG_LOCATION/radioplay.log)
+exec 2>&1
+echo "Log Location should be: [ $LOG_LOCATION ]"
+
 ##################################################################
 
 #  radioplay by MattRock <matt@mattrock.net>
