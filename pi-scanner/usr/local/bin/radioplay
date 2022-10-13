@@ -50,14 +50,6 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:
 # Make config changes to the following file...
 CONFIGFILE=/etc/radioplay/radioplay.conf
 
-#  In normal usage no changes should be made below...
-PID=$(systemctl show -p MainPID darkice.service 2>/dev/null | cut -d= -f2)
-LIBDIR=/var/lib/radioplay
-RPINDEX=$(cat /var/lib/radioplay/radioplay.index)
-TIMESTAMP=$(date +%F-%a-%H%M)
-ARCHIVE_FOLDER_SIZE=$(df -H "$ARCHIVE_FOLDER" | sed '1d' | awk '{print $5}' | cut -d'%' -f1)
-PURGABLE_FILES=$(find "$ARCHIVE_FOLDER"/*.mp3 | head -n 1)
-
 # Check and load the conf file
 # shellcheck source=/etc/radioplay/radioplay.conf
 # shellcheck disable=SC1091
@@ -68,11 +60,27 @@ else
 	exit 1
 fi
 
+#  In normal usage no changes should be made below...
+PID=$(systemctl show -p MainPID darkice.service 2>/dev/null | cut -d= -f2)
+LIBDIR=/var/lib/radioplay
+RPINDEX=$(cat /var/lib/radioplay/radioplay.index)
+TIMESTAMP=$(date +%F-%a-%H%M)
+ARCHIVE_FOLDER_SIZE=$(df -H "$ARCHIVE_FOLDER" | sed '1d' | awk '{print $5}' | cut -d'%' -f1)
+PURGABLE_FILES=$(find "$ARCHIVE_FOLDER"/*.mp3 | head -n 1)
+
 # Don't allow disk use above 90% regardless of what is in conf file...
-#  if you use separate partitions then you might be able to use more than 90
+# If you use separate partitions, then you might be able to use more than 90
 if [ "$DISK_CAP" -gt "90" ];then
 	DISK_CAP=90;
 fi
+
+# Checking config file id3 variables
+echo "The ID3V2ARTIST is: [ $ID3V2ARTIST ]"
+echo "The ID3V2ALBUM is: [ $ID3V2ALBUM ]"
+echo "The ID3V2COMMENT is: [ $ID3V2COMMENT ]"
+echo "The ID3V2GENRE is: [ $ID3V2GENRE ]"
+echo "The ID3V2SONG is: [ ${RPINDEX}_$ID3V2SONG ]"
+echo "The ID3V2YEAR is: [ $ID3V2YEAR ]"
 
 # Check for a prep command
 case "$1" in
@@ -104,7 +112,7 @@ case "$1" in
 	# save trimmed recording
 	if [[ "$SAVETYPE" = "all" || "$SAVETYPE" = "trim" ]];then
 		sox "$LIBDIR/$RPINDEX.mp3" "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3" silence -l "$ABOVE_PERIOD" "$ABOVE_DUR" "$ABOVE_THSHOLD""%" "$BELOW_PERIOD" "$BELOW_DUR" "$BELOW_THSHOLD""%" tempo "$TEMPO"
-		chmod 644 "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3"
+                chmod 644 "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3"
 		chown "$ARCHIVE_FOLDER_OWNER:$ARCHIVE_FOLDER_OWNER" "$ARCHIVE_FOLDER/$RPINDEX""_""$SHORT_LOCATION""_trimmed.mp3"
 	fi
 
