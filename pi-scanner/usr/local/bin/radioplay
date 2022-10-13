@@ -114,7 +114,7 @@ case "$1" in
 	find "$ARCHIVE_FOLDER" -iname '*.mp3' -mmin +"$ARCHIVE_AGE" -print0 | xargs -0 --no-run-if-empty  /bin/rm
 
 	# Next, delete some more if we need the disk space AND there are some to delete...
-	while  [ $DISK_CAP -lt "$ARCHIVE_FOLDER_SIZE" ] && [ "$(find "$ARCHIVE_FOLDER" -maxdepth 1 -name '*.mp3' -print -quit)" ]
+	while  [ "$DISK_CAP" -lt "$ARCHIVE_FOLDER_SIZE" ] && [ "$(find "$ARCHIVE_FOLDER" -maxdepth 1 -name '*.mp3' -print -quit)" ]
 	do
 		rm "$PURGABLE_FILES"
 	done
