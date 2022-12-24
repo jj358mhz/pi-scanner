@@ -3,17 +3,21 @@ Description=DarkIce live audio streamer
 Documentation=http://www.darkice.org/ man:darkice(1) man:darkice.cfg(5)
 After=icecast.service network-online.target sound.target
 Requires=sound.target
-Wants=network-online.target
+Wants=icecast.service network-online.target
 
 
 [Service]
+Restart=always
+StartLimitInterval=0
+# Restart service after 10 seconds if node service crashes
+RestartSec=1
 Type=simple
-ExecStart=/usr/bin/darkice -c /etc/darkice.cfg
+ExecStart=/usr/bin/darkice -v3 -c /etc/darkice.cfg
+ExecStop=/usr/bin/pkill darkice
 User=root
 Group=root
 Restart=on-failure
-# Restart service after 10 seconds if node service crashes
-RestartSec=10
+
 
 # DarkIce uses POSIX real-time scheduling to keep up with sound card input.
 # Let systemd change the CPU scheduler policy and priority beforehand, so that
@@ -23,3 +27,4 @@ CPUSchedulingPriority=4
 
 [Install]
 WantedBy=multi-user.target
+
