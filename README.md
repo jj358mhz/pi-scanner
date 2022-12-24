@@ -1,7 +1,7 @@
-scannerpi
+pi-scanner
 =========
 
-scannerpi is a collection of scripts and configuration files that you can use to assist in setting up a RaspBerry Pi for streaming scanner audio to websites such as Broadcastify.com
+pi-scanner is a collection of scripts and configuration files that you can use to assist in setting up a RaspBerry Pi for streaming scanner audio to websites such as Broadcastify.com
 
 # Step 1: RaspberryPi Pre-Configuration Steps
 
@@ -88,11 +88,11 @@ sudo mkdir scanneraudio
 
 ## Download all Configurations Files
 ```bash
-curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/darkice.service" -o darkice.service && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/darkice.cfg" -o darkice.cfg && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/radioplay" -o radioplay && curl "https://raw.githubusercontent.com/jj358mhz/scannerpi/master/radioplay.conf" -o radioplay.conf
+curl "https://raw.githubusercontent.com/jj358mhz/pi-scanner/master/darkice.service" -o darkice.service && curl "https://raw.githubusercontent.com/jj358mhz/pi-scanner/master/darkice.cfg" -o darkice.cfg && curl "https://raw.githubusercontent.com/jj358mhz/pi-scanner/master/radioplay" -o radioplay && curl "https://raw.githubusercontent.com/jj358mhz/pi-scanner/master/radioplay.conf" -o radioplay.conf
 
 OR clone the repo
 
-git clone https://github.com/jj358mhz/scannerpi.git
+git clone https://github.com/jj358mhz/pi-scanner.git
 ```
 * **Update the *darkice.cfg* and *radioplay.conf* configuration files using vi or nano to conform it to your radioreference.com settings**
 * **You may also need to modify the *radioplay* script at the *trim* area to customize the feed mnemonic**
