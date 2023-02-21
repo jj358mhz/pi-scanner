@@ -1,0 +1,20 @@
+#!/bin/bash
+echo '***** RUNNING POST-INSTALLATION TASKS *****'
+test $(stat -c %a /usr/local/bin/radioplay) -ne 700 && chmod +x /usr/local/bin/radioplay
+
+case $(basename $(readlink /proc/1/exe)) in
+    systemd)
+        systemctl daemon-reload
+        if [[ $? != 0 ]]; then
+            systemctl enable pi-slack
+            systemctl restart pi-slack
+            pgrep -alf pi-slack || echo "Unable to start pi-scanner service"
+        fi
+        ;;
+    *)
+        echo "Init system not found"
+        exit 1
+        ;;
+esac
+chmod 644 /etc/logrotate.d/pi-slack
+exit 0

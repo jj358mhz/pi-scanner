@@ -5,19 +5,15 @@ After=icecast.service network-online.target sound.target
 Requires=sound.target
 Wants=icecast.service network-online.target
 
-
 [Service]
-Restart=always
-StartLimitInterval=0
-# Restart service after 10 seconds if node service crashes
-RestartSec=1
 Type=simple
-ExecStart=/usr/bin/darkice -v3 -c /etc/darkice.cfg
-ExecStop=/usr/bin/pkill darkice
 User=root
 Group=root
-Restart=on-failure
-
+ExecStart=/usr/bin/darkice -v3 -c /etc/darkice.cfg
+ExecStop=/usr/bin/pkill darkice
+Restart=always
+RestartSec=1
+StartLimitInterval=0
 
 # DarkIce uses POSIX real-time scheduling to keep up with sound card input.
 # Let systemd change the CPU scheduler policy and priority beforehand, so that

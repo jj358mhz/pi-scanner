@@ -1,7 +1,15 @@
 # CHANGELOG
 
-# Version 2.5.3 - (06-Oct-2021)
+# Version 2.6.0 - (02-Jan-2023)
+## ADDED:
+- Debian pkg installation support
+## UPDATED:
+- Darkice service file to help control ALSA buffer underrun condition
 ## REMOVED:
+- 
+
+## Version 2.5.3 - (06-Oct-2021)
+### REMOVED:
 - Debugging `set -x` switch
 - Debugging `-v` switch
 
