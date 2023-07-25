@@ -1,7 +1,0 @@
-Package: pi-scanner
-Version: 2.4.3
-Maintainer: Jeff Johnston <jj358mhz@gmail.com>
-Description: Broadcastify service (darkice, radioplay) for RaspberryPi
-Homepage: https://github.com/jj358mhz/pi-scanner
-Architecture: all
-Depends: darkice, id3v2, sox
