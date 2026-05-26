@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=2.6.0
+VERSION=2.6.1
 
 # Log Location on Server.
 LOG_LOCATION=/home/pi/scanneraudio
@@ -65,7 +65,7 @@ fi
 #  In normal usage no changes should be made below...
 PID=$(systemctl show -p MainPID darkice.service 2>/dev/null | cut -d= -f2)
 LIBDIR=/var/lib/radioplay
-RPINDEX=$(cat /var/lib/radioplay/radioplay.index)
+RPINDEX=$(cat /var/lib/radioplay/radioplay.index 2>/dev/null || echo "")
 TIMESTAMP=$(date +%F-%a-%H%M)
 ARCHIVE_FOLDER_SIZE=$(df -H "$ARCHIVE_FOLDER" | sed '1d' | awk '{print $5}' | cut -d'%' -f1)
 PURGABLE_FILES=$(find "$ARCHIVE_FOLDER"/*.mp3 | head -n 1)
@@ -124,9 +124,11 @@ case "$1" in
 	find "$ARCHIVE_FOLDER" -iname '*.mp3' -mmin +"$ARCHIVE_AGE" -print0 | xargs -0 --no-run-if-empty  /bin/rm
 
 	# Next, delete some more if we need the disk space AND there are some to delete...
-	while  [ "$DISK_CAP" -lt "$ARCHIVE_FOLDER_SIZE" ] && [ "$(find "$ARCHIVE_FOLDER" -maxdepth 1 -name '*.mp3' -print -quit)" ]
+	while [ "$DISK_CAP" -lt "$ARCHIVE_FOLDER_SIZE" ] && [ "$(find "$ARCHIVE_FOLDER" -maxdepth 1 -name '*.mp3' -print -quit)" ]
 	do
+		PURGABLE_FILES=$(find "$ARCHIVE_FOLDER"/*.mp3 | head -n 1)
 		rm "$PURGABLE_FILES"
+		ARCHIVE_FOLDER_SIZE=$(df -H "$ARCHIVE_FOLDER" | sed '1d' | awk '{print $5}' | cut -d'%' -f1)
 	done
 
 	# Cleanup
