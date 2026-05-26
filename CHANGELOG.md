@@ -1,9 +1,14 @@
 # CHANGELOG
 
-# Version 2.6.0 - (02-Jan-2023)
-## ADDED:
+# Version 2.6.1 - (26-May-2026)
+## FIXED:
+- Guard against missing radioplay.index file on first run
+- Disk purge loop now refreshes the oldest-file target on each iteration
+
+## Version 2.6.0 - (02-Jan-2023)
+### ADDED:
 - Debian pkg installation support
-## UPDATED:
+### UPDATED:
 - Darkice service file to help control ALSA buffer underrun condition
 ## REMOVED:
 - 
