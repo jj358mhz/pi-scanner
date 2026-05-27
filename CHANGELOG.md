@@ -1,7 +1,12 @@
 # CHANGELOG
 
-# Version 2.6.1 - (26-May-2026)
-## FIXED:
+## Version 2.7.0 - (26-May-2026)
+### ADDED:
+- `darkice-watchdog.sh` script that polls the public WAN IP every 10 seconds and restarts DarkIce when the IP changes
+- `darkice-watchdog.service` systemd unit to run the watchdog automatically on boot
+
+## Version 2.6.1 - (26-May-2026)
+### FIXED:
 - Guard against missing radioplay.index file on first run
 - Disk purge loop now refreshes the oldest-file target on each iteration
 

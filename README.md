@@ -115,25 +115,29 @@ git clone https://github.com/jj358mhz/pi-scanner.git
 ### Set Permissions & Ownership
 
 ```bash
-sudo chown root:root darkice.cfg radioplay radioplay.conf darkice.service
-sudo chmod 755 radioplay darkice.service
+sudo chown root:root darkice.cfg radioplay radioplay.conf darkice.service darkice-watchdog.sh darkice-watchdog.service
+sudo chmod 755 radioplay darkice.service darkice-watchdog.sh darkice-watchdog.service
 sudo chmod 644 radioplay.conf darkice.cfg
 ```
 
 ### Copy Files to Destination
 
-| Source            | Destination                           |
-|-------------------|---------------------------------------|
-| `radioplay`       | `/usr/local/bin/radioplay`            |
-| `radioplay.conf`  | `/etc/radioplay/radioplay.conf`       |
-| `darkice.service` | `/etc/systemd/system/darkice.service` |
-| `darkice.cfg`     | `/etc/darkice.cfg`                    |
+| Source                     | Destination                                      |
+|----------------------------|--------------------------------------------------|
+| `radioplay`                | `/usr/local/bin/radioplay`                       |
+| `radioplay.conf`           | `/etc/radioplay/radioplay.conf`                  |
+| `darkice.service`          | `/etc/systemd/system/darkice.service`            |
+| `darkice.cfg`              | `/etc/darkice.cfg`                               |
+| `darkice-watchdog.sh`      | `/usr/local/bin/darkice-watchdog.sh`             |
+| `darkice-watchdog.service` | `/etc/systemd/system/darkice-watchdog.service`   |
 
 ```bash
 sudo cp radioplay /usr/local/bin/radioplay
 sudo cp radioplay.conf /etc/radioplay/radioplay.conf
 sudo cp darkice.service /etc/systemd/system/darkice.service
 sudo cp darkice.cfg /etc/darkice.cfg
+sudo cp darkice-watchdog.sh /usr/local/bin/darkice-watchdog.sh
+sudo cp darkice-watchdog.service /etc/systemd/system/darkice-watchdog.service
 ```
 
 ---
@@ -166,6 +170,15 @@ Create `/etc/cron.d/radioplay` and add:
 ```bash
 sudo systemctl enable darkice.service
 sudo systemctl start darkice.service
+```
+
+### Enable & Start the WAN IP Watchdog
+
+The watchdog monitors the public WAN IP every 10 seconds and automatically restarts DarkIce when the IP changes, preventing silent stream failures after ISP IP reassignments.
+
+```bash
+sudo systemctl enable darkice-watchdog.service
+sudo systemctl start darkice-watchdog.service
 ```
 
 ### 🔁 Reboot!
