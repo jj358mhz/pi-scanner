@@ -1,0 +1,13 @@
+[Unit]
+Description=DarkIce connection watchdog
+After=network.target darkice.service
+
+[Service]
+Type=simple
+TimeoutStartSec=0
+ExecStart=/usr/local/bin/darkice-watchdog.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
